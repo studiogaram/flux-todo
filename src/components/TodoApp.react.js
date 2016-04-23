@@ -4,6 +4,7 @@ var React = require('react');
 var TodoStore = require('../stores/TodoStore');
 var TodoActions = require('../actions/TodoActions');
 var TodoTextInput = require('./TodoTextInput.react');
+var TodoTable = require('./TodoTable.react');
 
 const getTodoState = () => {
   return {
@@ -17,14 +18,18 @@ var TodoApp = React.createClass({
   },
 
   componentDidMount: function() {
+    TodoStore.addChangeListener(this._onChange);
   },
 
-  componentWillUnmount: function() {},
+  componentWillUnmount: function() {
+    TodoStore.removeChangeListener(this._onChange);
+  },
 
   render: function() {
     return (
       <div>
         <TodoTextInput saveTodo = {this.saveTodo} />
+        <TodoTable allTodos={this.state.allTodos} />
       </div>
     );
   },
