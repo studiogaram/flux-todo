@@ -14,12 +14,13 @@ var TodoList = React.createClass({
     return (
       <li key = {todo.id}>
         <div>
-          <input
-            type = "checkbox"
-            checked = {todo.completed}
-            onChange = {this.toggleComplete}
-          />
-          <label> {todo.text} </label>
+          <label> 
+            <input
+              type = "checkbox"
+              checked = {todo.completed}
+              onChange = {this.toggleComplete}
+            />
+          {todo.text} </label>
           <button/>
         </div>
       </li>

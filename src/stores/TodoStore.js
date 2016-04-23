@@ -95,6 +95,16 @@ AppDispatcher.register((action)=>{
       update(action.id, {completed :true});
       TodoStore.emitChange();
       break;
+
+    case TodoConstants.TODO_TOGGLE_COMPLETE_ALL :
+    console.log (TodoStore.areAllCompleted());
+      if(TodoStore.areAllCompleted()){
+        updateAll({completed :false});
+      }else{
+        updateAll({completed :true});
+      }
+      TodoStore.emitChange();
+      break;
   }
 });
 
