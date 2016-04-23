@@ -4,8 +4,12 @@ var React = require('react');
 var TodoActions = require('../actions/TodoActions');
 
 var TodoList = React.createClass({
+  // getInitialState: function() {
+  //   return getTodoState();
+  // },
+
   render: function() {
-    var todo = this.props.todo;
+    let todo = this.props.todo;
 
     return (
       <li key = {todo.id}>

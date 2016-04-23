@@ -8,7 +8,8 @@ var TodoTable = require('./TodoTable.react');
 
 const getTodoState = () => {
   return {
-    allTodos: TodoStore.getAll()
+    allTodos: TodoStore.getAll(),
+    areAllCompleted:TodoStore.areAllCompleted()
   };
 };
 
@@ -29,7 +30,9 @@ var TodoApp = React.createClass({
     return (
       <div>
         <TodoTextInput saveTodo = {this.saveTodo} />
-        <TodoTable allTodos={this.state.allTodos} />
+        <TodoTable 
+          allTodos={this.state.allTodos} 
+          areAllCompleted={this.state.areAllCompleted}/>
       </div>
     );
   },

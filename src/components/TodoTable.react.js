@@ -11,9 +11,12 @@ var TodoTable = React.createClass({
     for(let key in items){
       lists.push(<TodoList key={key} todo={items[key]}/>);
     }
+    
     return (
       <div id="todo-list">
-        <input type="checkbox"/>
+        <input
+          type = "checkbox"
+          checked = {this.props.areAllCompleted ? 'checked' : ''}/>
         <label>Complete All</label>
         <ul>{lists}</ul>
       </div>

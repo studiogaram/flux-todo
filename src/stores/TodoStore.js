@@ -25,7 +25,7 @@ const update = (id, updates) => {
 };
 
 const updateAll = (updates) => {
-  for (var id in _todos) {
+  for (let id in _todos) {
     update(id, updates);
   }
 };
@@ -35,19 +35,27 @@ const remove = (id) => {
 };
 
 const removeAll = () => {
-  for (var id in _todos) {
+  for (let id in _todos) {
     remove(id);
   }
 };
 
 const removeCompleted = () => {
-  for (var id in _todos) {
+  for (let id in _todos) {
     if (!_todos[id].completed)
       remove(id);
   }
 };
 
 let TodoStore = assign({}, EventEmitter.prototype, {
+  areAllCompleted : function(){
+    for (let id in _todos){
+      if(!_todos[id].completed)
+        return false;
+    }
+    return true;
+
+  },
 
   getAll: function() {
     return _todos;
@@ -67,7 +75,7 @@ let TodoStore = assign({}, EventEmitter.prototype, {
 });
 
 AppDispatcher.register((action)=>{
-  var text;
+  let text;
 
   switch(action.actionType){
     case TodoConstants.TODO_CREATE :
@@ -79,12 +87,12 @@ AppDispatcher.register((action)=>{
       break;
 
     case TodoConstants.TODO_UNDO_COMPLETE :
-      _todos[action.id].completed = false;
+      update(action.id, {completed :false});
       TodoStore.emitChange();
       break;
 
     case TodoConstants.TODO_COMPLETE :
-      _todos[action.id].completed = true;
+      update(action.id, {completed :true});
       TodoStore.emitChange();
       break;
   }
