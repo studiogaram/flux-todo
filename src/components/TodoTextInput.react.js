@@ -1,6 +1,9 @@
 /*jshint esversion: 6 */
 
 var React = require('react');
+
+const ENTER_KEY = 13;
+
 var TodoTextInput = React.createClass({
   getInitialState: function() {
     return {
@@ -12,11 +15,20 @@ var TodoTextInput = React.createClass({
     return (
       <div>
         <input
+          onKeyDown = {this._onKeyDown}
           onChange = {this._onChange}
-          value = {this.state.value}/>
+          onBlur = {this.createTodo}
+          value = {this.state.value}
+          autoFocus = {true}/>
         <button onClick = {this.createTodo}/>
       </div>
     );
+  },
+
+  _onKeyDown : function(e){
+    if(e.keyCode === ENTER_KEY){
+      this.createTodo();
+    }
   },
 
   _onChange: function(e) {

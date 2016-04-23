@@ -16,7 +16,8 @@ const create = (text) => {
     id: id,
     completed: false,
     text: text,
-    hasChild: [] // if has no child, it has []. can get array of child's id. if it's child node, it can get false.
+    isChild : false,
+    hasChild: {} // if has no child, it has []. can get array of child's id. if it's child node, it can get false.
   };
 };
 
@@ -42,7 +43,7 @@ const removeAll = () => {
 
 const removeCompleted = () => {
   for (let id in _todos) {
-    if (!_todos[id].completed)
+    if (_todos[id].completed)
       remove(id);
   }
 };
@@ -97,12 +98,26 @@ AppDispatcher.register((action)=>{
       break;
 
     case TodoConstants.TODO_TOGGLE_COMPLETE_ALL :
-    console.log (TodoStore.areAllCompleted());
       if(TodoStore.areAllCompleted()){
         updateAll({completed :false});
       }else{
         updateAll({completed :true});
       }
+      TodoStore.emitChange();
+      break;
+
+    case TodoConstants.TODO_REMOVE :
+      remove(action.id);
+      TodoStore.emitChange();
+      break;
+
+    case TodoConstants.TODO_REMOVE_ALL :
+      removeAll();
+      TodoStore.emitChange();
+      break;
+
+    case TodoConstants.TODO_REMOVE_COMPLETED :
+      removeCompleted();
       TodoStore.emitChange();
       break;
   }

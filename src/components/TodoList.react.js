@@ -21,7 +21,7 @@ var TodoList = React.createClass({
               onChange = {this.toggleComplete}
             />
           {todo.text} </label>
-          <button/>
+          <button onClick = {this.removeItem}/>
         </div>
       </li>
     );
@@ -29,8 +29,11 @@ var TodoList = React.createClass({
 
   toggleComplete : function(){
     TodoActions.toggleComplete(this.props.todo);
-  }
+  },
 
+  removeItem : function(){
+    TodoActions.remove(this.props.todo);
+  }
 });
 
 module.exports = TodoList;

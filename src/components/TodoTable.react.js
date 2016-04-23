@@ -20,6 +20,12 @@ var TodoTable = React.createClass({
           onChange = {this.completeAll}
           checked = {this.props.areAllCompleted ? 'checked' : ''}/>
           Complete All</label>
+        <button
+          onClick = {this.removeAll}
+        >Remove All</button>
+        <button
+          onClick = {this.removeCompleted}
+        >Remove Complete</button>
         <ul>{lists}</ul>
       </div>
     );
@@ -27,8 +33,15 @@ var TodoTable = React.createClass({
 
   completeAll : function(){
     TodoActions.toggleCompleteAll();
-  }
+  },
+ 
+  removeAll : function(){
+    TodoActions.removeAll();
+  },
 
+  removeCompleted : function(){
+    TodoActions.removeCompleted();
+  }
 });
 
 module.exports = TodoTable;
