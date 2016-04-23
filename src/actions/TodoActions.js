@@ -10,6 +10,14 @@ var TodoActions = {
     });
   },
 
+  updateText : function(todo, text){
+    AppDispatcher.dispatch({
+      actionType: TodoConstants.TODO_UPDATE_TEXT,
+      id: todo.id,
+      text: text
+    });
+  },
+
   remove: function(todo){
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_REMOVE,

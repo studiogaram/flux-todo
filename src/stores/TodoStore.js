@@ -120,6 +120,15 @@ AppDispatcher.register((action)=>{
       removeCompleted();
       TodoStore.emitChange();
       break;
+
+    case TodoConstants.TODO_UPDATE_TEXT :
+      text = action.text.trim();
+      if(text !== ''){
+        update(action.id, {text :text});
+        TodoStore.emitChange();
+      }
+      break;
+      
   }
 });
 

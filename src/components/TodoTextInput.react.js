@@ -6,8 +6,10 @@ const ENTER_KEY = 13;
 
 var TodoTextInput = React.createClass({
   getInitialState: function() {
+    let checkedText = this.props.textValue ? this.props.textValue : '';
+
     return {
-      value: this.props.value || ''
+      value: this.props.value || checkedText
     };
   },
   
@@ -17,17 +19,16 @@ var TodoTextInput = React.createClass({
         <input
           onKeyDown = {this._onKeyDown}
           onChange = {this._onChange}
-          onBlur = {this.createTodo}
+          onBlur = {this.saveItem}
           value = {this.state.value}
           autoFocus = {true}/>
-        <button onClick = {this.createTodo}/>
       </div>
     );
   },
 
   _onKeyDown : function(e){
     if(e.keyCode === ENTER_KEY){
-      this.createTodo();
+      this.saveItem();
     }
   },
 
@@ -35,8 +36,8 @@ var TodoTextInput = React.createClass({
     this.setState({value : e.target.value});
   },
 
-  createTodo:function(){
-    this.props.saveTodo(this.state.value);
+  saveItem:function(){
+    this.props.saveItem(this.state.value);
     this.setState({value : ''});
   }
 

@@ -29,7 +29,7 @@ var TodoApp = React.createClass({
   render: function() {
     return (
       <div>
-        <TodoTextInput saveTodo = {this.saveTodo} />
+        <TodoTextInput saveItem = {this.createTodo} />
         <TodoTable 
           allTodos={this.state.allTodos} 
           areAllCompleted={this.state.areAllCompleted}/>
@@ -49,7 +49,7 @@ var TodoApp = React.createClass({
     this.setState(getTodoState());
   },
 
-  saveTodo : function(text){
+  createTodo : function(text){
     TodoActions.create(text);
     console.log(this.state.allTodos);
   }
