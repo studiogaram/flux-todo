@@ -3,12 +3,12 @@ var TodoConstants = require('../constants/TodoConstants');
 
 var TodoActions = {
 
-    create: function(text) {
-        AppDispatcher.dispatch({
-            actionType: TodoConstants.TODO_CREATE,
-            text: text
-        });
-    },
+  create: function(text) {
+    AppDispatcher.dispatch({
+      actionType: TodoConstants.TODO_CREATE,
+      text: text
+    });
+  }
 
 };
 
