@@ -2,6 +2,7 @@
 
 var React = require('react');
 var TodoActions = require('../actions/TodoActions');
+
 var TodoList = React.createClass({
   render: function() {
     var todo = this.props.todo;
@@ -12,6 +13,7 @@ var TodoList = React.createClass({
           <input
             type = "checkbox"
             checked = {todo.completed}
+            onChange = {this.toggleComplete}
           />
           <label> {todo.text} </label>
           <button/>
@@ -19,6 +21,10 @@ var TodoList = React.createClass({
       </li>
     );
   },
+
+  toggleComplete : function(){
+    TodoActions.toggleComplete(this.props.todo);
+  }
 
 });
 

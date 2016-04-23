@@ -8,6 +8,13 @@ var TodoActions = {
       actionType: TodoConstants.TODO_CREATE,
       text: text
     });
+  },
+
+  toggleComplete : function(todo){
+    AppDispatcher.dispatch({
+      actionType: todo.completed ? TodoConstants.TODO_UNDO_COMPLETE : TodoConstants.TODO_COMPLETE,
+      id: todo.id
+    });
   }
 
 };

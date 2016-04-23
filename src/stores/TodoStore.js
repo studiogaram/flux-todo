@@ -60,6 +60,7 @@ let TodoStore = assign({}, EventEmitter.prototype, {
   addChangeListener: function(callback){
     this.on(CHANGE_EVENT, callback);
   },
+
   removeChangeListener: function(callback){
     this.removeListener(CHANGE_EVENT, callback);
   }
@@ -75,6 +76,16 @@ AppDispatcher.register((action)=>{
         create(text);
         TodoStore.emitChange();
       }
+      break;
+
+    case TodoConstants.TODO_UNDO_COMPLETE :
+      _todos[action.id].completed = false;
+      TodoStore.emitChange();
+      break;
+
+    case TodoConstants.TODO_COMPLETE :
+      _todos[action.id].completed = true;
+      TodoStore.emitChange();
       break;
   }
 });
