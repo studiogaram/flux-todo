@@ -1,21 +1,30 @@
+/*jshint esversion: 6 */
+
 var React = require('react');
 var TodoStore = require('../stores/TodoStore');
+var TodoActions = require('../actions/TodoActions');
+var TodoTextInput = require('./TodoTextInput.react');
 
+const getTodoState = () => {
+  return {
+    allTodos: TodoStore.getAll()
+  };
+};
 
 var TodoApp = React.createClass({
-
   getInitialState: function() {
-    return null;
+    return getTodoState();
   },
 
-  componentDidMount: function() {},
+  componentDidMount: function() {
+  },
 
   componentWillUnmount: function() {},
 
   render: function() {
     return (
       <div>
-        <InputComponents> </InputComponents>
+        <TodoTextInput saveTodo = {this.saveTodo} />
       </div>
     );
   },
@@ -28,8 +37,14 @@ var TodoApp = React.createClass({
   //       </div>
   //     );
   // },
-  _onChange: function() {}
+  _onChange: function() {
+    this.setState(getTodoState());
+  },
 
+  saveTodo : function(text){
+    TodoActions.create(text);
+    console.log(this.state.allTodos);
+  }
 });
 
 module.exports = TodoApp;
