@@ -30,7 +30,7 @@ var TodoList = React.createClass({
           <input
             type = "checkbox"
             onChange = {this.completeAll}
-            checked = {this.props.areAllCompleted ? 'checked' : ''}/>
+            checked = {this.props.areAllCompleted}/>
           Complete All
         </label>
 
@@ -38,22 +38,22 @@ var TodoList = React.createClass({
           type = "radio"
           name = "filterTodoStatus"
           value = "all"
-          onChange = {this.filterTodo}
-          checked = {this.state.howTofilter=='all' ? 'checked' : ''}/> 
+          onChange = {this.toggleFilter}
+          checked = {this.state.howTofilter == 'all'}/> 
           All
         <input
           type = "radio"
           name = "filterTodoStatus"
           value = "incompleted"
-          onChange = {this.filterTodo}
-          checked = {this.state.howTofilter=='incompleted' ? 'checked' : ''}/>
+          onChange = {this.toggleFilter}
+          checked = {this.state.howTofilter == 'incompleted'}/>
           Active
         <input
           type = "radio"
           name = "filterTodoStatus"
           value = "completed"
-          onChange = {this.filterTodo}
-          checked = {this.state.howTofilter=='completed' ? 'checked' : ''}/>
+          onChange = {this.toggleFilter}
+          checked = {this.state.howTofilter == 'completed'}/>
           Completed
 
         <button
@@ -62,7 +62,7 @@ var TodoList = React.createClass({
         <button
           onClick = {this.removeCompleted}
         >Remove Complete</button>
-        
+
         <ul>{lists}</ul>
       </div>
     );
@@ -80,7 +80,7 @@ var TodoList = React.createClass({
     TodoActions.removeCompleted();
   },
 
-  filterTodo : function(e){
+  toggleFilter : function(e){
     this.setState({howTofilter:e.target.value});
   },
 
