@@ -11,6 +11,7 @@ const getTodoState = () => {
     allTodos: TodoStore.getAll(),
     areAllCompleted: TodoStore.areAllCompleted(),
     statusFilter: TodoStore.getStatusFilter(),
+    completeParent: TodoStore.completeParent(),
   };
 };
 

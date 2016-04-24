@@ -4,6 +4,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var TodoConstants = require('../constants/TodoConstants');
 var assign = require('object-assign');
+var _ = require('lodash');
 
 var CHANGE_EVENT = 'change';
 
@@ -28,20 +29,6 @@ const updateCompleted = (id, parentId, updates) => {
   if (parentId){
     _todos[parentId].children[id] = assign({}, _todos[parentId].children[id], updates);
 
-    let flag = 0;
-    let childrenLength = Object.keys(_todos[parentId].children).length;
-
-    for (let childKey in _todos[parentId].children){
-      if(_todos[parentId].children[childKey].completed){
-        flag++;
-      }
-    }
-
-    if (flag < childrenLength){
-      _todos[parentId] = assign({}, _todos[parentId], {completed :false});
-    }else if (flag === childrenLength){
-      _todos[parentId] = assign({}, _todos[parentId], {completed :true});
-    }
   }else{
     _todos[id] = assign({}, _todos[id], updates);
 
@@ -56,8 +43,6 @@ const updateText = (id, parentId, updates) => {
     _todos[parentId].children[id] = assign({}, _todos[parentId].children[id], updates);
   }else{
     _todos[id] = assign({}, _todos[id], updates);
-    for (let childKey in _todos[id].children){
-    }
   }
 };
 
@@ -89,28 +74,43 @@ const removeCompleted = () => {
       remove(id);
       continue;
     }
-    console.log(_todos[id]);
-    if (typeof _todos[id].children.length !==undefined){
-      for (let childKey in _todos[id].children){
-        if (_todos[id].children[childKey].completed)
-        remove(childKey, id);
-      }
-    }
+    _.forEach(_.filter(_todos[id].children, 'completed'), (value, key) => {
+      remove(value.id, value.parentId);
+    });
   }
 };
 
 let TodoStore = assign({}, EventEmitter.prototype, {
   areAllCompleted : function(){
     for (let id in _todos){
+
       if(!_todos[id].completed)
         return false;
     }
     return true;
-
+    // if(_.filter(_todos,'completed').length){
+    //   return false;
+    // }else{
+    //   return true;
+    // }
   },
 
   getAll: function() {
+    
     return _todos;
+  },
+
+  completeParent : function(){
+    for (let id in _todos){
+      let completedChildren = (_.filter(_todos[id].children, 'completed').length);
+      let childrenLength = Object.keys(_todos[id].children).length;
+
+      if (completedChildren === childrenLength && childrenLength !== 0){
+        _todos[id] = assign({}, _todos[id], {completed :true});
+      }else{
+        _todos[id] = assign({}, _todos[id], {completed :false});
+      }
+    }
   },
 
   getStatusFilter: function() {
