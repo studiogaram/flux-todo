@@ -12,24 +12,16 @@ let _statusFilter = 'all';
 
 const create = (text, parentId) => {
   var id = (+new Date() + Math.floor(Math.random() * 999999)).toString(32);
+  let item = {
+    id: id,
+    completed: false,
+    text: text,
+    parentId : parentId ? parentId : false,
+    children: parentId ? false : {},
+  };
 
-  if (parentId){
-    _todos[parentId].children[id] = {
-      id: id,
-      completed: false,
-      text: text,
-      parentId : parentId,
-      children: false,
-    };
-  }else{
-    _todos[id] = {
-      id: id,
-      completed: false,
-      text: text,
-      parentId : false,
-      children: {} // if has no child, it has []. can get array of child's id. if it's child node, it can get false.
-    };
-  }
+  parentId ? _todos[parentId].children[id] = item : _todos[id] = item;
+
 };
 
 const updateCompleted = (id, parentId, updates) => {

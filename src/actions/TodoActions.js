@@ -8,7 +8,7 @@ var TodoActions = {
   create: function(text, parentTodo = false) {
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_CREATE,
-      parentId : parentTodo.id,
+      parentId : parentTodo ? parentTodo.id : false,
       text: text,
     });
   },
