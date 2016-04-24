@@ -25,7 +25,25 @@ var TodoList = React.createClass({
           continue;
         }
       }
-      lists.push(<TodoListItem key={key} todo={items[key]}/>);
+
+      lists.push(<TodoListItem key={key} todo={items[key]} parentId = {false}/> );
+
+      let listChildren = [];
+      if (items[key].children){
+        for(let childKey in items[key].children){
+          if (this.props.statusFilter=='incompleted'){
+            if (items[key].children[childKey].completed){
+              continue;
+            }
+          }else if (this.props.statusFilter=='completed'){
+            if (!items[key].children[childKey].completed){
+              continue;
+            }
+          }
+          lists.push(<TodoListItem key={childKey} todo={items[key].children[childKey]} parentId = {key}/>);
+        }
+      }
+
     }
 
     return (

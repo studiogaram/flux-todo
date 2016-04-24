@@ -6,25 +6,30 @@ var TodoTextInput = require('./TodoTextInput.react');
 
 var TodoListItem = React.createClass({
   getInitialState: function() {
-    return {editable: false};
+    return {editable: false, addable : false};
   },
 
   render: function() {
     let todo = this.props.todo;
-    
-    let children = (<ul><li>fff</li></ul>);
-
-    let input = (
+    let inputEdit = (
       <div>
         <TodoTextInput
           textValue = {todo.text}
           saveItem = {this.updateText} />
-        <p
-          onClick = {this.makeChild}>
-          Add Child-Todo
-        </p>
-        {children}
       </div>
+    );
+    let inputAdd = (
+      <div>
+        <TodoTextInput
+          saveItem = {this.createChildTodo} />
+      </div>
+    );
+
+    let btnAddChild = (
+      <button
+        onClick = {this.setStateAddable}>
+        Add Child-Todo
+      </button>
     );
 
     let label = (
@@ -34,20 +39,22 @@ var TodoListItem = React.createClass({
           checked = {todo.completed}
           onChange = {this.toggleComplete}/>
         <label
-          onClick = {this.editItem}>
+          onClick = {this.setStateEditable}>
           {todo.text}
         </label>
-        {children}
+        {todo.parentId ? '' : btnAddChild}
         <button
           onClick = {this.removeItem}/>
       </div>
-      );
+    );
 
-    var item = this.state.editable ? input : label;
+    var itemEdit = this.state.editable ? inputEdit : label;
+    var itemAdd = this.state.addable ? inputAdd : '';
     
     return (
       <li key = {todo.id}>
-        {item}
+        {itemEdit}
+        {itemAdd}
       </li>
     );
   },
@@ -60,16 +67,20 @@ var TodoListItem = React.createClass({
     TodoActions.remove(this.props.todo);
   },
   
-  editItem : function(){
+  setStateEditable : function(){
     this.setState({editable: true});
 
   },
 
-  makeChild : function(){
-    this.setState({editable: true});
-
+  setStateAddable : function(){
+    this.setState({addable: true});
   },
-  
+
+  createChildTodo : function(text){
+    TodoActions.create(text, this.props.todo);
+    this.setState({addable: false});
+  },
+
   updateText : function(text){
     TodoActions.updateText(this.props.todo, text);
     this.setState({editable: false});

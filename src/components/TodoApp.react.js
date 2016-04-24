@@ -47,7 +47,6 @@ var TodoApp = React.createClass({
 
   createTodo : function(text){
     TodoActions.create(text);
-    console.log(this.state.allTodos);
   }
 });
 

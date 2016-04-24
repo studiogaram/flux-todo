@@ -1,11 +1,14 @@
+/*jshint esversion: 6 */
+
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var TodoConstants = require('../constants/TodoConstants');
 
 var TodoActions = {
 
-  create: function(text) {
+  create: function(text, parentTodo = false) {
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_CREATE,
+      parentId : parentTodo.id,
       text: text
     });
   },
@@ -14,6 +17,7 @@ var TodoActions = {
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_UPDATE_TEXT,
       id: todo.id,
+      parentId: todo.parentId,
       text: text
     });
   },
@@ -21,7 +25,8 @@ var TodoActions = {
   remove: function(todo){
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_REMOVE,
-      id: todo.id
+      id: todo.id,
+      parentId: todo.parentId
     });
   },
 
@@ -40,7 +45,8 @@ var TodoActions = {
   toggleComplete : function(todo){
     AppDispatcher.dispatch({
       actionType: todo.completed ? TodoConstants.TODO_UNDO_COMPLETE : TodoConstants.TODO_COMPLETE,
-      id: todo.id
+      id: todo.id,
+      parentId: todo.parentId,
     });
   },
 
