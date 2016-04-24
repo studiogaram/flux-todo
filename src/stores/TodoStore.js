@@ -11,7 +11,7 @@ let _todos = {};
 let _statusFilter = 'all';
 
 const create = (text, parentId) => {
-  var id = btoa(+new Date() + Math.floor(Math.random() * 999999));
+  var id = (+new Date() + Math.floor(Math.random() * 999999)).toString(32);
 
   if (parentId){
     _todos[parentId].children[id] = {
