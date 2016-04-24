@@ -32,7 +32,7 @@ const create = (text, parentId) => {
   }
 };
 
-const updateComplete = (id, parentId, updates) => {
+const updateCompleted = (id, parentId, updates) => {
   if (parentId){
     _todos[parentId].children[id] = assign({}, _todos[parentId].children[id], updates);
 
@@ -69,9 +69,9 @@ const updateText = (id, parentId, updates) => {
   }
 };
 
-const updateCompleteAll = (updates) => {
+const updateCompletedAll = (updates) => {
   for (let id in _todos) {
-    updateComplete(id, false, updates);
+    updateCompleted(id, false, updates);
   }
 };
 
@@ -151,20 +151,20 @@ AppDispatcher.register((action)=>{
       break;
 
     case TodoConstants.TODO_UNDO_COMPLETE :
-      updateComplete(action.id, action.parentId, {completed :false});
+      updateCompleted(action.id, action.parentId, {completed :false});
       TodoStore.emitChange();
       break;
 
     case TodoConstants.TODO_COMPLETE :
-      updateComplete(action.id, action.parentId, {completed :true});
+      updateCompleted(action.id, action.parentId, {completed :true});
       TodoStore.emitChange();
       break;
 
     case TodoConstants.TODO_TOGGLE_COMPLETE_ALL :
       if(TodoStore.areAllCompleted()){
-        updateCompleteAll({completed :false});
+        updateCompletedAll({completed :false});
       }else{
-        updateCompleteAll({completed :true});
+        updateCompletedAll({completed :true});
       }
       TodoStore.emitChange();
       break;

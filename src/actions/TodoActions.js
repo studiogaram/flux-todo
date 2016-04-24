@@ -9,7 +9,7 @@ var TodoActions = {
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_CREATE,
       parentId : parentTodo.id,
-      text: text
+      text: text,
     });
   },
 
