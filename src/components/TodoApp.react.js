@@ -9,9 +9,9 @@ var TodoList = require('./TodoList.react');
 const getTodoState = () => {
   return {
     allTodos: TodoStore.getAll(),
-    areAllCompleted: TodoStore.areAllCompleted(),
     statusFilter: TodoStore.getStatusFilter(),
     completeParent: TodoStore.completeParent(),
+    areAllCompleted: TodoStore.areAllCompleted(),
   };
 };
 

@@ -67,11 +67,9 @@ const removeAll = () => {
 };
 
 const removeCompleted = () => {
-      console.log(_todos);
-
   for (let id in _todos) {
     if (_todos[id].completed){
-      remove(id);
+      remove(id, false);
       continue;
     }
     _.forEach(_.filter(_todos[id].children, 'completed'), (value, key) => {
@@ -83,9 +81,9 @@ const removeCompleted = () => {
 let TodoStore = assign({}, EventEmitter.prototype, {
   areAllCompleted : function(){
     for (let id in _todos){
-
-      if(!_todos[id].completed)
+      if(!_todos[id].completed){
         return false;
+      }
     }
     return true;
     // if(_.filter(_todos,'completed').length){
@@ -105,10 +103,12 @@ let TodoStore = assign({}, EventEmitter.prototype, {
       let completedChildren = (_.filter(_todos[id].children, 'completed').length);
       let childrenLength = Object.keys(_todos[id].children).length;
 
-      if (completedChildren === childrenLength && childrenLength !== 0){
-        _todos[id] = assign({}, _todos[id], {completed :true});
-      }else{
-        _todos[id] = assign({}, _todos[id], {completed :false});
+      if (childrenLength){
+        if (completedChildren === childrenLength){
+          _todos[id] = assign({}, _todos[id], {completed :true});
+        }else{
+          _todos[id] = assign({}, _todos[id], {completed :false});
+        }
       }
     }
   },
