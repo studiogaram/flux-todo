@@ -2,51 +2,46 @@
 
 var React = require('react');
 var TodoActions = require('../actions/TodoActions');
-var TodoTextInput = require('./TodoTextInput.react');
+var TodoListItem = require('./TodoListItem.react');
 
 var TodoList = React.createClass({
-  getInitialState: function() {
-    return {editable: false};
-  },
-
   render: function() {
-    let todo = this.props.todo;
-  
-    let input = (<TodoTextInput textValue = {todo.text} saveItem = {this.updateText} />);
-    let label = (<label onClick = {this.ableEdit}>{todo.text}</label>);
-    var text = this.state.editable ? input : label;
-    
+    let items = this.props.allTodos;
+    let lists = [];
+
+    for(let key in items){
+      lists.push(<TodoListItem key={key} todo={items[key]}/>);
+    }
+
     return (
-      <li key = {todo.id}>
-        <div>
-            <input
-              type = "checkbox"
-              checked = {todo.completed}
-              onChange = {this.toggleComplete}
-            />
-            {text}
-          <button onClick = {this.removeItem}/>
-        </div>
-      </li>
+      <div id="todo-list">
+        <label>
+        <input
+          type = "checkbox"
+          onChange = {this.completeAll}
+          checked = {this.props.areAllCompleted ? 'checked' : ''}/>
+          Complete All</label>
+        <button
+          onClick = {this.removeAll}
+        >Remove All</button>
+        <button
+          onClick = {this.removeCompleted}
+        >Remove Complete</button>
+        <ul>{lists}</ul>
+      </div>
     );
   },
 
-  toggleComplete : function(){
-    TodoActions.toggleComplete(this.props.todo);
+  completeAll : function(){
+    TodoActions.toggleCompleteAll();
+  },
+ 
+  removeAll : function(){
+    TodoActions.removeAll();
   },
 
-  removeItem : function(){
-    TodoActions.remove(this.props.todo);
-  },
-  
-  ableEdit : function(){
-    this.setState({editable: true});
-
-  },
-
-  updateText : function(text){
-    TodoActions.updateText(this.props.todo, text);
-    this.setState({editable: false});
+  removeCompleted : function(){
+    TodoActions.removeCompleted();
   }
 });
 

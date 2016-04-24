@@ -4,7 +4,7 @@ var React = require('react');
 var TodoStore = require('../stores/TodoStore');
 var TodoActions = require('../actions/TodoActions');
 var TodoTextInput = require('./TodoTextInput.react');
-var TodoTable = require('./TodoTable.react');
+var TodoList = require('./TodoList.react');
 
 const getTodoState = () => {
   return {
@@ -30,7 +30,7 @@ var TodoApp = React.createClass({
     return (
       <div>
         <TodoTextInput saveItem = {this.createTodo} />
-        <TodoTable 
+        <TodoList 
           allTodos={this.state.allTodos} 
           areAllCompleted={this.state.areAllCompleted}/>
       </div>
