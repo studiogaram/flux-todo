@@ -69,6 +69,7 @@ var TodoListItem = React.createClass({
     this.setState({editable: true});
 
   },
+  
   updateText : function(text){
     TodoActions.updateText(this.props.todo, text);
     this.setState({editable: false});

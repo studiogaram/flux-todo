@@ -84,11 +84,6 @@ var TodoList = React.createClass({
     this.setState({howTofilter:e.target.value});
   },
 
-  // setFilterChecked : function(e){
-  //   if(this.state.howTofilter == e.target.value)
-  //     return 'checked';
-  //   return '';
-  // }
 });
 
 module.exports = TodoList;

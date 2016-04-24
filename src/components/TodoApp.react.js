@@ -5,6 +5,7 @@ var TodoStore = require('../stores/TodoStore');
 var TodoActions = require('../actions/TodoActions');
 var TodoTextInput = require('./TodoTextInput.react');
 var TodoList = require('./TodoList.react');
+var TodoNavigation = require('./TodoNavigation.react');
 
 const getTodoState = () => {
   return {
@@ -33,18 +34,11 @@ var TodoApp = React.createClass({
         <TodoList 
           allTodos={this.state.allTodos} 
           areAllCompleted={this.state.areAllCompleted}/>
+        <TodoNavigation allTodos={this.state.allTodos} />
       </div>
     );
   },
-  // render: function() {
-  //     return (
-  //       <div>
-  //         <Input></Input>
-  //         <Lists></Lists>
-  //         <Status></Status>
-  //       </div>
-  //     );
-  // },
+
   _onChange: function() {
     this.setState(getTodoState());
   },
