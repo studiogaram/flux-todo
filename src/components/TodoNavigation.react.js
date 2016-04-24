@@ -1,24 +1,57 @@
 /*jshint esversion: 6 */
 
 var React = require('react');
+var TodoActions = require('../actions/TodoActions');
 
 var TodoNavigation = React.createClass({
+
   render: function() {
-    let items = this.props.allTodos;
-    let numberTodoActive = 0;
-
-    for(let key in items){
-      if (items[key].completed==true)
-        continue;
-      else
-        numberTodoActive++;
-    }
-
     return (
       <div>
-        <p>{numberTodoActive} {numberTodoActive<2 ? 'item' : 'items'} left.</p>
+        <p>{this.props.numberTodoActive} {this.props.numberTodoActive<2 ? 'item' : 'items'} left.</p>
+
+        <button
+          onClick = {this.removeAll}
+        >Remove All</button>
+        <button
+          onClick = {this.removeCompleted}
+        >Remove Complete</button>
+
+        <input
+          type = "radio"
+          name = "filterTodoStatus"
+          value = "all"
+          onChange = {this.toggleFilter}
+          checked = {this.props.statusFilter == 'all'}/> 
+          All
+        <input
+          type = "radio"
+          name = "filterTodoStatus"
+          value = "incompleted"
+          onChange = {this.toggleFilter}
+          checked = {this.props.statusFilter == 'incompleted'}/>
+          Active
+        <input
+          type = "radio"
+          name = "filterTodoStatus"
+          value = "completed"
+          onChange = {this.toggleFilter}
+          checked = {this.props.statusFilter == 'completed'}/>
+          Completed
       </div>
     );
+  },
+ 
+  removeAll : function(){
+    TodoActions.removeAll();
+  },
+
+  removeCompleted : function(){
+    TodoActions.removeCompleted();
+  },
+
+  toggleFilter : function(e){
+    TodoActions.setStatusFilter(e.target.value);
   },
 
 });

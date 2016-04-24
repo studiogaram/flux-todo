@@ -5,12 +5,12 @@ var TodoStore = require('../stores/TodoStore');
 var TodoActions = require('../actions/TodoActions');
 var TodoTextInput = require('./TodoTextInput.react');
 var TodoList = require('./TodoList.react');
-var TodoNavigation = require('./TodoNavigation.react');
 
 const getTodoState = () => {
   return {
     allTodos: TodoStore.getAll(),
-    areAllCompleted:TodoStore.areAllCompleted()
+    areAllCompleted: TodoStore.areAllCompleted(),
+    statusFilter: TodoStore.getStatusFilter(),
   };
 };
 
@@ -28,13 +28,15 @@ var TodoApp = React.createClass({
   },
 
   render: function() {
+
     return (
       <div>
         <TodoTextInput saveItem = {this.createTodo} />
         <TodoList 
           allTodos={this.state.allTodos} 
-          areAllCompleted={this.state.areAllCompleted}/>
-        <TodoNavigation allTodos={this.state.allTodos} />
+          areAllCompleted={this.state.areAllCompleted}
+          statusFilter={this.state.statusFilter}
+          />
       </div>
     );
   },

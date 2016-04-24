@@ -8,6 +8,7 @@ var assign = require('object-assign');
 var CHANGE_EVENT = 'change';
 
 let _todos = {};
+let _statusFilter = 'all';
 
 const create = (text) => {
   var id = (+new Date() + Math.floor(Math.random() * 999999));
@@ -60,6 +61,10 @@ let TodoStore = assign({}, EventEmitter.prototype, {
 
   getAll: function() {
     return _todos;
+  },
+
+  getStatusFilter: function() {
+    return _statusFilter;
   },
 
   emitChange: function(){
@@ -128,7 +133,14 @@ AppDispatcher.register((action)=>{
         TodoStore.emitChange();
       }
       break;
-      
+    
+    case TodoConstants.TODO_SET_STATUS_FILTER :
+      _statusFilter = action.filter;
+      TodoStore.emitChange();
+      break;
+    
+    default:
+      break;
   }
 });
 

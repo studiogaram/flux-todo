@@ -48,6 +48,13 @@ var TodoActions = {
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_TOGGLE_COMPLETE_ALL,
     });
+  },
+
+  setStatusFilter : function(filter){
+    AppDispatcher.dispatch({
+      actionType: TodoConstants.TODO_SET_STATUS_FILTER,
+      filter: filter
+    });
   }
 };
 
