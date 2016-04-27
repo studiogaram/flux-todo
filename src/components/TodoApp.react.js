@@ -15,20 +15,22 @@ const getTodoState = () => {
   };
 };
 
-var TodoApp = React.createClass({
-  getInitialState: function() {
-    return getTodoState();
-  },
+export default class TodoApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = getTodoState();
+    this.onChange = this.onChange.bind(this);
+  }
 
-  componentDidMount: function() {
-    TodoStore.addChangeListener(this._onChange);
-  },
+  componentDidMount() {
+    TodoStore.addChangeListener(this.onChange);
+  }
 
-  componentWillUnmount: function() {
-    TodoStore.removeChangeListener(this._onChange);
-  },
+  componentWillUnmount() {
+    TodoStore.removeChangeListener(this.onChange);
+  }
 
-  render: function() {
+  render() {
 
     return (
       <div>
@@ -40,15 +42,13 @@ var TodoApp = React.createClass({
           />
       </div>
     );
-  },
+  }
 
-  _onChange: function() {
+  onChange() {
     this.setState(getTodoState());
-  },
+  }
 
-  createTodo : function(text){
+  createTodo(text){
     TodoActions.create(text);
   }
-});
-
-module.exports = TodoApp;
+}

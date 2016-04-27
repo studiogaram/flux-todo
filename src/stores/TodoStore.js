@@ -79,7 +79,7 @@ const removeCompleted = () => {
 };
 
 let TodoStore = assign({}, EventEmitter.prototype, {
-  areAllCompleted : function(){
+  areAllCompleted(){
     for (let id in _todos){
       if(!_todos[id].completed){
         return false;
@@ -93,12 +93,12 @@ let TodoStore = assign({}, EventEmitter.prototype, {
     // }
   },
 
-  getAll: function() {
+  getAll() {
     
     return _todos;
   },
 
-  completeParent : function(){
+  completeParent(){
     for (let id in _todos){
       let completedChildren = (_.filter(_todos[id].children, 'completed').length);
       let childrenLength = Object.keys(_todos[id].children).length;
@@ -113,19 +113,19 @@ let TodoStore = assign({}, EventEmitter.prototype, {
     }
   },
 
-  getStatusFilter: function() {
+  getStatusFilter() {
     return _statusFilter;
   },
 
-  emitChange: function(){
+  emitChange(){
     this.emit(CHANGE_EVENT);
   },
 
-  addChangeListener: function(callback){
+  addChangeListener(callback){
     this.on(CHANGE_EVENT, callback);
   },
 
-  removeChangeListener: function(callback){
+  removeChangeListener(callback){
     this.removeListener(CHANGE_EVENT, callback);
   }
 });

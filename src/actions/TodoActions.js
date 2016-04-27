@@ -3,9 +3,8 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import TodoConstants from '../constants/TodoConstants';
 
-var TodoActions = {
-
-  create: function(text, parentTodo = false) {
+const TodoActions = {
+  create(text, parentTodo = false) {
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_CREATE,
       parentId : parentTodo ? parentTodo.id : false,
@@ -13,7 +12,7 @@ var TodoActions = {
     });
   },
 
-  updateText : function(todo, text){
+  updateText(todo, text){
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_UPDATE_TEXT,
       id: todo.id,
@@ -22,7 +21,7 @@ var TodoActions = {
     });
   },
 
-  remove: function(todo){
+  remove(todo){
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_REMOVE,
       id: todo.id,
@@ -30,19 +29,19 @@ var TodoActions = {
     });
   },
 
-  removeAll: function(){
+  removeAll(){
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_REMOVE_ALL,
     });
   },
 
-  removeCompleted: function(todo){
+  removeCompleted(todo){
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_REMOVE_COMPLETED,
     });
   },
 
-  toggleComplete : function(todo){
+  toggleComplete(todo){
     AppDispatcher.dispatch({
       actionType: todo.completed ? TodoConstants.TODO_UNDO_COMPLETE : TodoConstants.TODO_COMPLETE,
       id: todo.id,
@@ -50,13 +49,13 @@ var TodoActions = {
     });
   },
 
-  toggleCompleteAll : function(completed){
+  toggleCompleteAll(completed){
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_TOGGLE_COMPLETE_ALL,
     });
   },
 
-  setStatusFilter : function(filter){
+  setStatusFilter(filter){
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_SET_STATUS_FILTER,
       filter: filter

@@ -5,9 +5,8 @@ import TodoActions from '../actions/TodoActions';
 import TodoListItem from './TodoListItem.react';
 import TodoNavigation from './TodoNavigation.react';
 
-var TodoList = React.createClass({
-
-  render: function() {
+export default class TodoList extends React.Component {
+  render() {
     let items = this.props.allTodos;
     let lists = [];
     let numberTodoActive = 0;
@@ -61,12 +60,10 @@ var TodoList = React.createClass({
         <TodoNavigation statusFilter = {this.props.statusFilter} numberTodoActive={numberTodoActive} />
       </div>
     );
-  },
+  }
 
-  completeAll : function(){
+  completeAll(){
     TodoActions.toggleCompleteAll();
-  },
+  }
 
-});
-
-module.exports = TodoList;
+}

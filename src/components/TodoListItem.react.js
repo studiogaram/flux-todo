@@ -4,12 +4,23 @@ import React from 'react';
 import TodoActions from '../actions/TodoActions';
 import TodoTextInput from './TodoTextInput.react';
 
-var TodoListItem = React.createClass({
-  getInitialState: function() {
-    return {editable: false, addable : false};
-  },
+export default class TodoListItem extends React.Component {
+  constructor(props) {
+    super(props);
 
-  render: function() {
+    this.state = {
+      ditable: false,
+      addable : false
+    };
+    this.toggleComplete = this.toggleComplete.bind(this);
+    this.removeItem = this.removeItem.bind(this);
+    this.setStateEditable = this.setStateEditable.bind(this);
+    this.setStateAddable = this.setStateAddable.bind(this);
+    this.createChildTodo = this.createChildTodo.bind(this);
+    this.updateText = this.updateText.bind(this);
+  }
+
+  render() {
     let todo = this.props.todo;
     let inputEdit = (
       <div>
@@ -57,34 +68,32 @@ var TodoListItem = React.createClass({
         {itemAdd}
       </li>
     );
-  },
+  }
 
-  toggleComplete : function(){
+  toggleComplete(){
     TodoActions.toggleComplete(this.props.todo);
-  },
+  }
 
-  removeItem : function(){
+  removeItem(){
     TodoActions.remove(this.props.todo);
-  },
+  }
   
-  setStateEditable : function(){
+  setStateEditable(){
     this.setState({editable: true});
 
-  },
+  }
 
-  setStateAddable : function(){
+  setStateAddable(){
     this.setState({addable: true});
-  },
+  }
 
-  createChildTodo : function(text){
+  createChildTodo(text){
     TodoActions.create(text, this.props.todo);
     this.setState({addable: false});
-  },
+  }
 
-  updateText : function(text){
+  updateText (text){
     TodoActions.updateText(this.props.todo, text);
     this.setState({editable: false});
   }
-});
-
-module.exports = TodoListItem;
+}

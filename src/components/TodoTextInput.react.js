@@ -4,43 +4,45 @@ import React from 'react';
 
 const ENTER_KEY = 13;
 
-var TodoTextInput = React.createClass({
-  getInitialState: function() {
-    let checkedText = this.props.textValue ? this.props.textValue : '';
+export default class TodoTextInput extends React.Component {
+  constructor(props) {
+    super(props);
 
-    return {
-      value: this.props.value || checkedText
+    let checkedText = props.textValue ? props.textValue : '';
+    this.state = {
+      value: props.value || checkedText
     };
-  },
+    this.onKeyDown = this.onKeyDown.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.saveItem = this.saveItem.bind(this);
+  }
   
-  render: function() {
+  render() {
     return (
       <div>
         <input
-          onKeyDown = {this._onKeyDown}
-          onChange = {this._onChange}
+          onKeyDown = {this.onKeyDown}
+          onChange = {this.onChange}
           onBlur = {this.saveItem}
           value = {this.state.value}
           autoFocus = {true}/>
       </div>
     );
-  },
+  }
 
-  _onKeyDown : function(e){
+  onKeyDown(e){
     if(e.keyCode === ENTER_KEY){
       this.saveItem();
     }
-  },
+  }
 
-  _onChange: function(e) {
+  onChange(e) {
     this.setState({value : e.target.value});
-  },
+  }
 
-  saveItem:function(){
+  saveItem(){
     this.props.saveItem(this.state.value);
     this.setState({value : ''});
   }
 
-});
-
-module.exports = TodoTextInput;
+}

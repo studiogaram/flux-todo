@@ -3,9 +3,12 @@
 import React from 'react';
 import TodoActions from '../actions/TodoActions';
 
-var TodoNavigation = React.createClass({
+export default class TodoNavigation extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-  render: function() {
+  render() {
     return (
       <div>
         <p>{this.props.numberTodoActive} {this.props.numberTodoActive<2 ? 'item' : 'items'} left.</p>
@@ -40,20 +43,18 @@ var TodoNavigation = React.createClass({
           Completed
       </div>
     );
-  },
+  }
  
-  removeAll : function(){
+  removeAll(){
     TodoActions.removeAll();
-  },
+  }
 
-  removeCompleted : function(){
+  removeCompleted(){
     TodoActions.removeCompleted();
-  },
+  }
 
-  toggleFilter : function(e){
+  toggleFilter(e){
     TodoActions.setStatusFilter(e.target.value);
-  },
+  }
 
-});
-
-module.exports = TodoNavigation;
+}
