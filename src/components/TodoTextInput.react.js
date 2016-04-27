@@ -25,7 +25,7 @@ export default class TodoTextInput extends React.Component {
           onChange = {this.onChange}
           onBlur = {this.saveItem}
           value = {this.state.value}
-          autoFocus = {true}/>
+          autoFocus />
       </div>
     );
   }

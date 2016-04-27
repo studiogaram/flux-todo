@@ -48,14 +48,14 @@ export default class TodoListItem extends React.Component {
         <input
           type = "checkbox"
           checked = {todo.completed}
-          onChange = {this.toggleComplete}/>
+          onChange = {this.toggleComplete} />
         <label
           onClick = {this.setStateEditable}>
           {todo.text}
         </label>
         {todo.parentId ? '' : btnAddChild}
         <button
-          onClick = {this.removeItem}/>
+          onClick = {this.removeItem} />
       </div>
     );
 

@@ -25,7 +25,7 @@ export default class TodoList extends React.Component {
         }
       }
 
-      lists.push(<TodoListItem key={key} todo={items[key]} parentId = {false}/> );
+      lists.push(<TodoListItem key={key} todo={items[key]} parentId={false} /> );
 
       let listChildren = [];
       if (items[key].children){
@@ -39,7 +39,7 @@ export default class TodoList extends React.Component {
               continue;
             }
           }
-          lists.push(<TodoListItem key={childKey} todo={items[key].children[childKey]} parentId = {key}/>);
+          lists.push(<TodoListItem key={childKey} todo={items[key].children[childKey]} parentId={key} />);
         }
       }
 
@@ -51,7 +51,7 @@ export default class TodoList extends React.Component {
           <input
             type = "checkbox"
             onChange = {this.completeAll}
-            checked = {this.props.areAllCompleted}/>
+            checked = {this.props.areAllCompleted} />
           Complete All
         </label>
 

@@ -25,21 +25,21 @@ export default class TodoNavigation extends React.Component {
           name = "filterTodoStatus"
           value = "all"
           onChange = {this.toggleFilter}
-          checked = {this.props.statusFilter == 'all'}/> 
+          checked = {this.props.statusFilter == 'all'} /> 
           All
         <input
           type = "radio"
           name = "filterTodoStatus"
           value = "incompleted"
           onChange = {this.toggleFilter}
-          checked = {this.props.statusFilter == 'incompleted'}/>
+          checked = {this.props.statusFilter == 'incompleted'} />
           Active
         <input
           type = "radio"
           name = "filterTodoStatus"
           value = "completed"
           onChange = {this.toggleFilter}
-          checked = {this.props.statusFilter == 'completed'}/>
+          checked = {this.props.statusFilter == 'completed'} />
           Completed
       </div>
     );
