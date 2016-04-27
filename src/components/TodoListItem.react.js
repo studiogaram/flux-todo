@@ -1,8 +1,8 @@
 /*jshint esversion: 6 */
 
-var React = require('react');
-var TodoActions = require('../actions/TodoActions');
-var TodoTextInput = require('./TodoTextInput.react');
+import React from 'react';
+import TodoActions from '../actions/TodoActions';
+import TodoTextInput from './TodoTextInput.react';
 
 var TodoListItem = React.createClass({
   getInitialState: function() {

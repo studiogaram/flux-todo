@@ -1,18 +1,18 @@
 /*jshint esversion: 6 */
 
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var EventEmitter = require('events').EventEmitter;
-var TodoConstants = require('../constants/TodoConstants');
-var assign = require('object-assign');
-var _ = require('lodash');
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import {EventEmitter} from 'events';
+import TodoConstants from '../constants/TodoConstants';
+import assign from 'object-assign';
+import _ from 'lodash';
 
-var CHANGE_EVENT = 'change';
+let CHANGE_EVENT = 'change';
 
 let _todos = {};
 let _statusFilter = 'all';
 
 const create = (text, parentId) => {
-  var id = (+new Date() + Math.floor(Math.random() * 999999)).toString(32);
+  let id = (+new Date() + Math.floor(Math.random() * 999999)).toString(32);
   let item = {
     id: id,
     completed: false,

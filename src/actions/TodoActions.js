@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var TodoConstants = require('../constants/TodoConstants');
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import TodoConstants from '../constants/TodoConstants';
 
 var TodoActions = {
 

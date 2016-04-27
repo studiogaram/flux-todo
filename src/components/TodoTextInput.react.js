@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
 
-var React = require('react');
+import React from 'react';
 
 const ENTER_KEY = 13;
 

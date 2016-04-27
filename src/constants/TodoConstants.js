@@ -1,4 +1,6 @@
-var keyMirror = require('keymirror');
+/*jshint esversion: 6 */
+
+import keyMirror from 'keymirror';
 
 module.exports = keyMirror({
   TODO_CREATE: null,

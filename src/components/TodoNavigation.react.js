@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 
-var React = require('react');
-var TodoActions = require('../actions/TodoActions');
+import React from 'react';
+import TodoActions from '../actions/TodoActions';
 
 var TodoNavigation = React.createClass({
 

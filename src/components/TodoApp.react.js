@@ -1,10 +1,10 @@
 /*jshint esversion: 6 */
 
-var React = require('react');
-var TodoStore = require('../stores/TodoStore');
-var TodoActions = require('../actions/TodoActions');
-var TodoTextInput = require('./TodoTextInput.react');
-var TodoList = require('./TodoList.react');
+import React from 'react';
+import TodoStore from '../stores/TodoStore';
+import TodoActions from '../actions/TodoActions';
+import TodoTextInput from './TodoTextInput.react';
+import TodoList from './TodoList.react';
 
 const getTodoState = () => {
   return {
