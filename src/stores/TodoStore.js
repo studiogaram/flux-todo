@@ -1,19 +1,17 @@
-/*jshint esversion: 6 */
-
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import {EventEmitter} from 'events';
+import { EventEmitter } from 'events';
 import TodoConstants from '../constants/TodoConstants';
 import assign from 'object-assign';
 import _ from 'lodash';
 
-let CHANGE_EVENT = 'change';
+const CHANGE_EVENT = 'change';
 
-let _todos = {};
-let _statusFilter = 'all';
+const _todos = {};
+let _statusFilter = ']all';
 
 const create = (text, parentId) => {
-  let id = (+new Date() + Math.floor(Math.random() * 999999)).toString(32);
-  let item = {
+  const id = (+new Date() + Math.floor(Math.random() * 999999)).toString(32);
+  const item = {
     id: id,
     completed: false,
     text: text,
@@ -21,15 +19,17 @@ const create = (text, parentId) => {
     children: parentId ? false : {},
   };
 
-  parentId ? _todos[parentId].children[id] = item : _todos[id] = item;
-
+  if (parentId) {
+    _todos[parentId].children[id] = item;
+  } else {
+    _todos[id] = item;
+  }
 };
 
 const updateCompleted = (id, parentId, updates) => {
-  if (parentId){
+  if (parentId) {
     _todos[parentId].children[id] = assign({}, _todos[parentId].children[id], updates);
-
-  }else{
+  } else {
     _todos[id] = assign({}, _todos[id], updates);
 
     for (let childKey in _todos[id].children){
@@ -41,7 +41,7 @@ const updateCompleted = (id, parentId, updates) => {
 const updateText = (id, parentId, updates) => {
   if (parentId){
     _todos[parentId].children[id] = assign({}, _todos[parentId].children[id], updates);
-  }else{
+  } else {
     _todos[id] = assign({}, _todos[id], updates);
   }
 };
@@ -53,9 +53,9 @@ const updateCompletedAll = (updates) => {
 };
 
 const remove = (id, parentId) => {
-  if (parentId){
+  if (parentId) {
     delete _todos[parentId].children[id];
-  }else{
+  } else {
     delete _todos[id];
   }
 };
@@ -78,10 +78,10 @@ const removeCompleted = () => {
   }
 };
 
-let TodoStore = assign({}, EventEmitter.prototype, {
-  areAllCompleted(){
-    for (let id in _todos){
-      if(!_todos[id].completed){
+const TodoStore = assign({}, EventEmitter.prototype, {
+  areAllCompleted() {
+    for (let id in _todos) {
+      if (!_todos[id].completed) {
         return false;
       }
     }
@@ -94,20 +94,19 @@ let TodoStore = assign({}, EventEmitter.prototype, {
   },
 
   getAll() {
-    
     return _todos;
   },
 
-  completeParent(){
-    for (let id in _todos){
-      let completedChildren = (_.filter(_todos[id].children, 'completed').length);
-      let childrenLength = Object.keys(_todos[id].children).length;
+  completeParent() {
+    for (let id in _todos) {
+      const completedChildren = (_.filter(_todos[id].children, 'completed').length);
+      const childrenLength = Object.keys(_todos[id].children).length;
 
-      if (childrenLength){
-        if (completedChildren === childrenLength){
-          _todos[id] = assign({}, _todos[id], {completed :true});
-        }else{
-          _todos[id] = assign({}, _todos[id], {completed :false});
+      if (childrenLength) {
+        if (completedChildren === childrenLength) {
+          _todos[id] = assign({}, _todos[id], { completed: true });
+        } else {
+          _todos[id] = assign({}, _todos[id], { completed: false });
         }
       }
     }
@@ -117,80 +116,80 @@ let TodoStore = assign({}, EventEmitter.prototype, {
     return _statusFilter;
   },
 
-  emitChange(){
+  emitChange() {
     this.emit(CHANGE_EVENT);
   },
 
-  addChangeListener(callback){
+  addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
   },
 
-  removeChangeListener(callback){
+  removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
-  }
+  },
 });
 
-AppDispatcher.register((action)=>{
+AppDispatcher.register((action) => {
   let text;
 
-  switch(action.actionType){
-    case TodoConstants.TODO_CREATE :
-      text = action.text.trim();
-      if(text !== ''){
-        create(text, action.parentId);
-        TodoStore.emitChange();
-      }
-      break;
-
-    case TodoConstants.TODO_UNDO_COMPLETE :
-      updateCompleted(action.id, action.parentId, {completed :false});
+  switch (action.actionType) {
+  case TodoConstants.TODO_CREATE :
+    text = action.text.trim();
+    if (text !== '') {
+      create(text, action.parentId);
       TodoStore.emitChange();
-      break;
+    }
+    break;
 
-    case TodoConstants.TODO_COMPLETE :
-      updateCompleted(action.id, action.parentId, {completed :true});
-      TodoStore.emitChange();
-      break;
+  case TodoConstants.TODO_UNDO_COMPLETE :
+    updateCompleted(action.id, action.parentId, { completed :false });
+    TodoStore.emitChange();
+    break;
 
-    case TodoConstants.TODO_TOGGLE_COMPLETE_ALL :
-      if(TodoStore.areAllCompleted()){
-        updateCompletedAll({completed :false});
-      }else{
-        updateCompletedAll({completed :true});
-      }
-      TodoStore.emitChange();
-      break;
+  case TodoConstants.TODO_COMPLETE :
+    updateCompleted(action.id, action.parentId, { completed :true });
+    TodoStore.emitChange();
+    break;
 
-    case TodoConstants.TODO_REMOVE :
-      remove(action.id, action.parentId);
-      TodoStore.emitChange();
-      break;
+  case TodoConstants.TODO_TOGGLE_COMPLETE_ALL :
+    if (TodoStore.areAllCompleted()) {
+      updateCompletedAll({ completed: false });
+    } else {
+      updateCompletedAll({ completed: true });
+    }
+    TodoStore.emitChange();
+    break;
 
-    case TodoConstants.TODO_REMOVE_ALL :
-      removeAll();
-      TodoStore.emitChange();
-      break;
+  case TodoConstants.TODO_REMOVE :
+    remove(action.id, action.parentId);
+    TodoStore.emitChange();
+    break;
 
-    case TodoConstants.TODO_REMOVE_COMPLETED :
-      removeCompleted();
-      TodoStore.emitChange();
-      break;
+  case TodoConstants.TODO_REMOVE_ALL :
+    removeAll();
+    TodoStore.emitChange();
+    break;
 
-    case TodoConstants.TODO_UPDATE_TEXT :
-      text = action.text.trim();
-      if(text !== ''){
-        updateText(action.id, action.parentId, {text :text});
-        TodoStore.emitChange();
-      }
-      break;
-    
-    case TodoConstants.TODO_SET_STATUS_FILTER :
-      _statusFilter = action.filter;
+  case TodoConstants.TODO_REMOVE_COMPLETED :
+    removeCompleted();
+    TodoStore.emitChange();
+    break;
+
+  case TodoConstants.TODO_UPDATE_TEXT :
+    text = action.text.trim();
+    if (text !== '') {
+      updateText(action.id, action.parentId, { text: text });
       TodoStore.emitChange();
-      break;
-    
-    default:
-      break;
+    }
+    break;
+
+  case TodoConstants.TODO_SET_STATUS_FILTER :
+    _statusFilter = action.filter;
+    TodoStore.emitChange();
+    break;
+
+  default:
+    break;
   }
 });
 

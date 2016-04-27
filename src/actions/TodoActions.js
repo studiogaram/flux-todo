@@ -1,5 +1,3 @@
-/*jshint esversion: 6 */
-
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import TodoConstants from '../constants/TodoConstants';
 
@@ -7,41 +5,41 @@ const TodoActions = {
   create(text, parentTodo = false) {
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_CREATE,
-      parentId : parentTodo ? parentTodo.id : false,
+      parentId: parentTodo ? parentTodo.id : false,
       text: text,
     });
   },
 
-  updateText(todo, text){
+  updateText(todo, text) {
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_UPDATE_TEXT,
       id: todo.id,
       parentId: todo.parentId,
-      text: text
+      text: text,
     });
   },
 
-  remove(todo){
+  remove(todo) {
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_REMOVE,
       id: todo.id,
-      parentId: todo.parentId
+      parentId: todo.parentId,
     });
   },
 
-  removeAll(){
+  removeAll() {
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_REMOVE_ALL,
     });
   },
 
-  removeCompleted(todo){
+  removeCompleted() {
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_REMOVE_COMPLETED,
     });
   },
 
-  toggleComplete(todo){
+  toggleComplete(todo) {
     AppDispatcher.dispatch({
       actionType: todo.completed ? TodoConstants.TODO_UNDO_COMPLETE : TodoConstants.TODO_COMPLETE,
       id: todo.id,
@@ -49,16 +47,16 @@ const TodoActions = {
     });
   },
 
-  toggleCompleteAll(completed){
+  toggleCompleteAll(completed) {
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_TOGGLE_COMPLETE_ALL,
     });
   },
 
-  setStatusFilter(filter){
+  setStatusFilter(filter) {
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_SET_STATUS_FILTER,
-      filter: filter
+      filter: filter,
     });
   }
 };

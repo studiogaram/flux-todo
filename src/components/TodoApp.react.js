@@ -1,5 +1,3 @@
-/*jshint esversion: 6 */
-
 import React from 'react';
 import TodoStore from '../stores/TodoStore';
 import TodoActions from '../actions/TodoActions';
@@ -30,25 +28,23 @@ export default class TodoApp extends React.Component {
     TodoStore.removeChangeListener(this.onChange);
   }
 
-  render() {
-
-    return (
-      <div>
-        <TodoTextInput saveItem = {this.createTodo} />
-        <TodoList 
-          allTodos={this.state.allTodos} 
-          areAllCompleted={this.state.areAllCompleted}
-          statusFilter={this.state.statusFilter}
-          />
-      </div>
-    );
-  }
-
   onChange() {
     this.setState(getTodoState());
   }
 
-  createTodo(text){
+  createTodo(text) {
     TodoActions.create(text);
+  }
+  render() {
+    return (
+      <div>
+        <TodoTextInput saveItem = {this.createTodo} />
+        <TodoList
+          allTodos={this.state.allTodos}
+          areAllCompleted={this.state.areAllCompleted}
+          statusFilter={this.state.statusFilter}
+        />
+      </div>
+    );
   }
 }

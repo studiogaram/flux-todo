@@ -1,11 +1,17 @@
-/*jshint esversion: 6 */
-
 import React from 'react';
 import TodoActions from '../actions/TodoActions';
 
 export default class TodoNavigation extends React.Component {
-  constructor(props) {
-    super(props);
+  removeAll() {
+    TodoActions.removeAll();
+  }
+
+  removeCompleted() {
+    TodoActions.removeCompleted();
+  }
+
+  toggleFilter(e) {
+    TodoActions.setStatusFilter(e.target.value);
   }
 
   render() {
@@ -13,48 +19,38 @@ export default class TodoNavigation extends React.Component {
       <div>
         <p>{this.props.numberTodoActive} {this.props.numberTodoActive<2 ? 'item' : 'items'} left.</p>
 
-        <button
-          onClick = {this.removeAll}
-        >Remove All</button>
-        <button
-          onClick = {this.removeCompleted}
-        >Remove Complete</button>
+        <button onClick = {this.removeAll}>
+          Remove All
+        </button>
+        <button onClick = {this.removeCompleted}>
+          Remove Complete
+        </button>
 
         <input
           type = "radio"
           name = "filterTodoStatus"
           value = "all"
           onChange = {this.toggleFilter}
-          checked = {this.props.statusFilter == 'all'} /> 
-          All
+          checked = {this.props.statusFilter === 'all'}
+        />
+        All
         <input
           type = "radio"
           name = "filterTodoStatus"
           value = "incompleted"
           onChange = {this.toggleFilter}
-          checked = {this.props.statusFilter == 'incompleted'} />
-          Active
+          checked = {this.props.statusFilter === 'incompleted'}
+        />
+        Active
         <input
           type = "radio"
           name = "filterTodoStatus"
           value = "completed"
           onChange = {this.toggleFilter}
-          checked = {this.props.statusFilter == 'completed'} />
-          Completed
+          checked = {this.props.statusFilter === 'completed'}
+        />
+        Completed
       </div>
     );
   }
- 
-  removeAll(){
-    TodoActions.removeAll();
-  }
-
-  removeCompleted(){
-    TodoActions.removeCompleted();
-  }
-
-  toggleFilter(e){
-    TodoActions.setStatusFilter(e.target.value);
-  }
-
 }

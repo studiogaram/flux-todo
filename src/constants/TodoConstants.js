@@ -1,5 +1,3 @@
-/*jshint esversion: 6 */
-
 import keyMirror from 'keymirror';
 
 module.exports = keyMirror({
@@ -11,5 +9,5 @@ module.exports = keyMirror({
   TODO_TOGGLE_COMPLETE_ALL: null,
   TODO_UNDO_COMPLETE: null,
   TODO_UPDATE_TEXT: null,
-  TODO_SET_STATUS_FILTER: null
+  TODO_SET_STATUS_FILTER: null,
 });

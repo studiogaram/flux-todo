@@ -1,5 +1,3 @@
-/*jshint esversion: 6 */
-
 import React from 'react';
 import TodoActions from '../actions/TodoActions';
 import TodoTextInput from './TodoTextInput.react';
@@ -9,8 +7,8 @@ export default class TodoListItem extends React.Component {
     super(props);
 
     this.state = {
-      ditable: false,
-      addable : false
+      editable: false,
+      addable: false,
     };
     this.toggleComplete = this.toggleComplete.bind(this);
     this.removeItem = this.removeItem.bind(this);
@@ -19,26 +17,49 @@ export default class TodoListItem extends React.Component {
     this.createChildTodo = this.createChildTodo.bind(this);
     this.updateText = this.updateText.bind(this);
   }
+  setStateEditable() {
+    this.setState({ editable: true });
+  }
+
+  setStateAddable() {
+    this.setState({ addable: true });
+  }
+
+  updateText(text) {
+    TodoActions.updateText(this.props.todo, text);
+    this.setState({ editable: false });
+  }
+
+  createChildTodo(text) {
+    TodoActions.create(text, this.props.todo);
+    this.setState({ addable: false });
+  }
+
+  toggleComplete() {
+    TodoActions.toggleComplete(this.props.todo);
+  }
+
+  removeItem() {
+    TodoActions.remove(this.props.todo);
+  }
 
   render() {
-    let todo = this.props.todo;
-    let inputEdit = (
+    const todo = this.props.todo;
+    const inputEdit = (
       <div>
         <TodoTextInput
           textValue = {todo.text}
           saveItem = {this.updateText} />
       </div>
     );
-    let inputAdd = (
+    const inputAdd = (
       <div>
-        <TodoTextInput
-          saveItem = {this.createChildTodo} />
+        <TodoTextInput saveItem = {this.createChildTodo} />
       </div>
     );
 
-    let btnAddChild = (
-      <button
-        onClick = {this.setStateAddable}>
+    const btnAddChild = (
+      <button onClick = {this.setStateAddable}>
         Add Child-Todo
       </button>
     );
@@ -48,52 +69,23 @@ export default class TodoListItem extends React.Component {
         <input
           type = "checkbox"
           checked = {todo.completed}
-          onChange = {this.toggleComplete} />
-        <label
-          onClick = {this.setStateEditable}>
+          onChange = {this.toggleComplete}
+        />
+        <label onClick = {this.setStateEditable}>
           {todo.text}
         </label>
         {todo.parentId ? '' : btnAddChild}
-        <button
-          onClick = {this.removeItem} />
+        <button onClick = {this.removeItem} />
       </div>
     );
 
-    var itemEdit = this.state.editable ? inputEdit : label;
-    var itemAdd = this.state.addable ? inputAdd : '';
-    
+    let itemEdit = this.state.editable ? inputEdit : label;
+    let itemAdd = this.state.addable ? inputAdd : '';
     return (
       <li key = {todo.id}>
         {itemEdit}
         {itemAdd}
       </li>
     );
-  }
-
-  toggleComplete(){
-    TodoActions.toggleComplete(this.props.todo);
-  }
-
-  removeItem(){
-    TodoActions.remove(this.props.todo);
-  }
-  
-  setStateEditable(){
-    this.setState({editable: true});
-
-  }
-
-  setStateAddable(){
-    this.setState({addable: true});
-  }
-
-  createChildTodo(text){
-    TodoActions.create(text, this.props.todo);
-    this.setState({addable: false});
-  }
-
-  updateText (text){
-    TodoActions.updateText(this.props.todo, text);
-    this.setState({editable: false});
   }
 }
