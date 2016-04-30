@@ -6,7 +6,7 @@ const TodoActions = {
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_CREATE,
       parentId: parentTodo ? parentTodo.id : false,
-      text: text,
+      text,
     });
   },
 
@@ -15,7 +15,7 @@ const TodoActions = {
       actionType: TodoConstants.TODO_UPDATE_TEXT,
       id: todo.id,
       parentId: todo.parentId,
-      text: text,
+      text,
     });
   },
 
@@ -47,7 +47,7 @@ const TodoActions = {
     });
   },
 
-  toggleCompleteAll(completed) {
+  toggleCompleteAll() {
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_TOGGLE_COMPLETE_ALL,
     });
@@ -56,9 +56,9 @@ const TodoActions = {
   setStatusFilter(filter) {
     AppDispatcher.dispatch({
       actionType: TodoConstants.TODO_SET_STATUS_FILTER,
-      filter: filter,
+      filter,
     });
-  }
+  },
 };
 
 module.exports = TodoActions;

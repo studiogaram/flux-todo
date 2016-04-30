@@ -4,14 +4,12 @@ import TodoActions from '../actions/TodoActions';
 import TodoTextInput from './TodoTextInput.react';
 import TodoList from './TodoList.react';
 
-const getTodoState = () => {
-  return {
-    allTodos: TodoStore.getAll(),
-    statusFilter: TodoStore.getStatusFilter(),
-    completeParent: TodoStore.completeParent(),
-    areAllCompleted: TodoStore.areAllCompleted(),
-  };
-};
+const getTodoState = () => ({
+  allTodos: TodoStore.getAll(),
+  statusFilter: TodoStore.getStatusFilter(),
+  completeParent: TodoStore.completeParent(),
+  areAllCompleted: TodoStore.areAllCompleted(),
+});
 
 export default class TodoApp extends React.Component {
   constructor(props) {

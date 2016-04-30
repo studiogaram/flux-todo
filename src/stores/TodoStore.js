@@ -7,15 +7,15 @@ import _ from 'lodash';
 const CHANGE_EVENT = 'change';
 
 const _todos = {};
-let _statusFilter = ']all';
+let _statusFilter = 'all';
 
 const create = (text, parentId) => {
   const id = (+new Date() + Math.floor(Math.random() * 999999)).toString(32);
   const item = {
-    id: id,
+    id,
     completed: false,
-    text: text,
-    parentId : parentId ? parentId : false,
+    text,
+    parentId,
     children: parentId ? false : {},
   };
 
@@ -32,14 +32,14 @@ const updateCompleted = (id, parentId, updates) => {
   } else {
     _todos[id] = assign({}, _todos[id], updates);
 
-    for (let childKey in _todos[id].children){
+    for (const childKey in _todos[id].children) {
       _todos[id].children[childKey] = assign({}, _todos[id].children[childKey], updates);
     }
   }
 };
 
 const updateText = (id, parentId, updates) => {
-  if (parentId){
+  if (parentId) {
     _todos[parentId].children[id] = assign({}, _todos[parentId].children[id], updates);
   } else {
     _todos[id] = assign({}, _todos[id], updates);
@@ -47,7 +47,7 @@ const updateText = (id, parentId, updates) => {
 };
 
 const updateCompletedAll = (updates) => {
-  for (let id in _todos) {
+  for (const id in _todos) {
     updateCompleted(id, false, updates);
   }
 };
@@ -61,14 +61,14 @@ const remove = (id, parentId) => {
 };
 
 const removeAll = () => {
-  for (let id in _todos) {
+  for (const id in _todos) {
     remove(id);
   }
 };
 
 const removeCompleted = () => {
-  for (let id in _todos) {
-    if (_todos[id].completed){
+  for (const id in _todos) {
+    if (_todos[id].completed) {
       remove(id, false);
       continue;
     }
@@ -80,7 +80,7 @@ const removeCompleted = () => {
 
 const TodoStore = assign({}, EventEmitter.prototype, {
   areAllCompleted() {
-    for (let id in _todos) {
+    for (const id in _todos) {
       if (!_todos[id].completed) {
         return false;
       }
@@ -98,7 +98,7 @@ const TodoStore = assign({}, EventEmitter.prototype, {
   },
 
   completeParent() {
-    for (let id in _todos) {
+    for (const id in _todos) {
       const completedChildren = (_.filter(_todos[id].children, 'completed').length);
       const childrenLength = Object.keys(_todos[id].children).length;
 
@@ -142,12 +142,12 @@ AppDispatcher.register((action) => {
     break;
 
   case TodoConstants.TODO_UNDO_COMPLETE :
-    updateCompleted(action.id, action.parentId, { completed :false });
+    updateCompleted(action.id, action.parentId, { completed: false });
     TodoStore.emitChange();
     break;
 
   case TodoConstants.TODO_COMPLETE :
-    updateCompleted(action.id, action.parentId, { completed :true });
+    updateCompleted(action.id, action.parentId, { completed: true });
     TodoStore.emitChange();
     break;
 
@@ -178,7 +178,7 @@ AppDispatcher.register((action) => {
   case TodoConstants.TODO_UPDATE_TEXT :
     text = action.text.trim();
     if (text !== '') {
-      updateText(action.id, action.parentId, { text: text });
+      updateText(action.id, action.parentId, { text });
       TodoStore.emitChange();
     }
     break;
