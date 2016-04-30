@@ -17,7 +17,7 @@ describe('TodoListItem', () => {
         todo: {
           complete: false,
           id: '1',
-          text: 'Im a todo!',
+          text: 'Test Todo~',
           parentId: false,
           children: {},
         },
