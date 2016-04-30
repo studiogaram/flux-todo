@@ -9,7 +9,6 @@ import TodoActions from '../../actions/TodoActions';
 
 describe('TodoNavigation', () => {
   let itemAll;
-  let arrButton;
   beforeEach(() => {
     itemAll = TestUtils.renderIntoDocument(
       React.createElement(TodoNavigation, {
@@ -17,7 +16,6 @@ describe('TodoNavigation', () => {
         numberTodoActive: 4,
       })
     );
-    arrButton = ['all', 'completed', 'incompleted'];
   });
 
   describe('input-radio-filter-* will calls action.setStatusFilter', () => {

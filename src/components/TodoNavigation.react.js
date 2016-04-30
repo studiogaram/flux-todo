@@ -20,14 +20,19 @@ export default class TodoNavigation extends React.Component {
         <p>{this.props.numberTodoActive}
           {this.props.numberTodoActive < 2 ? ' item' : ' items'} left.</p>
 
-        <button onClick = {this.removeAll}>
+        <button
+          className = "btn-remove-all"
+          onClick = {this.removeAll}>
           Remove All
         </button>
-        <button onClick = {this.removeCompleted}>
+        <button
+          className = "btn-remove-completed"
+          onClick = {this.removeCompleted}>
           Remove Complete
         </button>
 
         <input
+          className = "input-radio-filter-all"
           type = "radio"
           name = "filterTodoStatus"
           value = "all"
@@ -36,6 +41,7 @@ export default class TodoNavigation extends React.Component {
         />
         All
         <input
+          className = "input-radio-filter-incompleted"
           type = "radio"
           name = "filterTodoStatus"
           value = "incompleted"
@@ -44,6 +50,7 @@ export default class TodoNavigation extends React.Component {
         />
         Active
         <input
+          className = "input-radio-filter-completed"
           type = "radio"
           name = "filterTodoStatus"
           value = "completed"

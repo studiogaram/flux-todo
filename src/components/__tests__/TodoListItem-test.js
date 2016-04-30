@@ -3,7 +3,6 @@
 jest.unmock('../TodoListItem.react');
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import TodoListItem from '../TodoListItem.react';
 import TodoActions from '../../actions/TodoActions';
