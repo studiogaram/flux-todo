@@ -33,11 +33,11 @@ export default class TodoList extends React.Component {
       const listChildren = [];
       if (items[key].children) {
         for (let childKey in items[key].children) {
-          if (this.props.statusFilter=='incompleted'){
-            if (items[key].children[childKey].completed){
+          if (this.props.statusFilter === 'incompleted') {
+            if (items[key].children[childKey].completed) {
               continue;
             }
-          } else if (this.props.statusFilter=='completed') {
+          } else if (this.props.statusFilter === 'completed') {
             if (!items[key].children[childKey].completed) {
               continue;
             }
@@ -54,14 +54,24 @@ export default class TodoList extends React.Component {
           <input
             type = "checkbox"
             onChange = {this.completeAll}
-            checked = {this.props.areAllCompleted} />
+            checked = {this.props.areAllCompleted}
+          />
           Complete All
         </label>
 
         <ul>{lists}</ul>
 
-        <TodoNavigation statusFilter = {this.props.statusFilter} numberTodoActive={numberTodoActive} />
+        <TodoNavigation
+          statusFilter = {this.props.statusFilter}
+          numberTodoActive={numberTodoActive}
+        />
       </div>
     );
   }
 }
+
+TodoList.propTypes = {
+  areAllCompleted: React.PropTypes.bool.isRequired,
+  allTodos: React.PropTypes.object.isRequired,
+  statusFilter: React.PropTypes.oneOf(['all', 'completed', 'incompleted']),
+};

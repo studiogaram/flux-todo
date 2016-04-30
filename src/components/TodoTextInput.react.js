@@ -22,7 +22,7 @@ export default class TodoTextInput extends React.Component {
   }
 
   onChange(e) {
-    this.setState({ value : e.target.value });
+    this.setState({ value: e.target.value });
   }
 
   saveItem() {
@@ -44,3 +44,9 @@ export default class TodoTextInput extends React.Component {
     );
   }
 }
+
+TodoTextInput.propTypes = {
+  textValue: React.PropTypes.string,
+  value: React.PropTypes.string,
+  saveItem: React.PropTypes.func.isRequired,
+};

@@ -49,7 +49,8 @@ export default class TodoListItem extends React.Component {
       <div>
         <TodoTextInput
           textValue = {todo.text}
-          saveItem = {this.updateText} />
+          saveItem = {this.updateText}
+        />
       </div>
     );
     const inputAdd = (
@@ -89,3 +90,8 @@ export default class TodoListItem extends React.Component {
     );
   }
 }
+
+
+TodoListItem.propTypes = {
+  todo: React.PropTypes.object.isRequired,
+};

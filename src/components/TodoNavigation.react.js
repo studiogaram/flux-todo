@@ -17,7 +17,8 @@ export default class TodoNavigation extends React.Component {
   render() {
     return (
       <div>
-        <p>{this.props.numberTodoActive} {this.props.numberTodoActive<2 ? 'item' : 'items'} left.</p>
+        <p>{this.props.numberTodoActive}
+          {this.props.numberTodoActive < 2 ? ' item' : ' items'} left.</p>
 
         <button onClick = {this.removeAll}>
           Remove All
@@ -54,3 +55,8 @@ export default class TodoNavigation extends React.Component {
     );
   }
 }
+
+TodoNavigation.propTypes = {
+  statusFilter: React.PropTypes.oneOf(['all', 'completed', 'incompleted']),
+  numberTodoActive: React.PropTypes.number.isRequired,
+};
