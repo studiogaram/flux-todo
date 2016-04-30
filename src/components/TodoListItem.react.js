@@ -48,6 +48,7 @@ export default class TodoListItem extends React.Component {
     const inputEdit = (
       <div>
         <TodoTextInput
+          className = "input-text-edit"
           textValue = {todo.text}
           saveItem = {this.updateText}
         />
@@ -60,7 +61,10 @@ export default class TodoListItem extends React.Component {
     );
 
     const btnAddChild = (
-      <button onClick = {this.setStateAddable}>
+      <button
+        className = "btn-add-child"
+        onClick = {this.setStateAddable}
+      >
         Add Child-Todo
       </button>
     );
@@ -68,6 +72,7 @@ export default class TodoListItem extends React.Component {
     let label = (
       <div>
         <input
+          className = "input-check-item"
           type = "checkbox"
           checked = {todo.completed}
           onChange = {this.toggleComplete}
@@ -76,7 +81,10 @@ export default class TodoListItem extends React.Component {
           {todo.text}
         </label>
         {todo.parentId ? '' : btnAddChild}
-        <button onClick = {this.removeItem} />
+        <button
+          className="btn-remove-item"
+          onClick = {this.removeItem}
+        />
       </div>
     );
 
