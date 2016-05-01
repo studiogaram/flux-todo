@@ -35,6 +35,7 @@ export default class TodoListItem extends React.Component {
     this.setState({ addable: false });
   }
 
+
   toggleComplete() {
     TodoActions.toggleComplete(this.props.todo);
   }
@@ -46,18 +47,19 @@ export default class TodoListItem extends React.Component {
   render() {
     const todo = this.props.todo;
     const inputEdit = (
-      <div>
-        <TodoTextInput
-          className = "input-text-edit"
-          textValue = {todo.text}
-          saveItem = {this.updateText}
-        />
-      </div>
+      <TodoTextInput
+        className = "input-todo-edit"
+        textValue = {todo.text}
+        saveItem = {this.updateText}
+        placeholder = "Edit New Todo"
+      />
     );
     const inputAdd = (
-      <div>
-        <TodoTextInput saveItem = {this.createChildTodo} />
-      </div>
+      <TodoTextInput
+        className = "input-todo-edit"
+        saveItem = {this.createChildTodo}
+        placeholder = "Add New Child Todo"
+      />
     );
 
     const btnAddChild = (
@@ -77,23 +79,33 @@ export default class TodoListItem extends React.Component {
           checked = {todo.completed}
           onChange = {this.toggleComplete}
         />
-        <label onClick = {this.setStateEditable}>
+        <label
+          className = "label-item"
+          onClick = {this.setStateEditable}
+        >
           {todo.text}
         </label>
         {todo.parentId ? '' : btnAddChild}
         <button
           className="btn-remove-item"
           onClick = {this.removeItem}
-        />
+        >
+        Remove
+        </button>
       </div>
     );
 
     let itemEdit = this.state.editable ? inputEdit : label;
     let itemAdd = this.state.addable ? inputAdd : '';
     return (
-      <li key = {todo.id}>
+      <li
+        key = {todo.id}
+        className = {todo.parentId ? 'list-item-child' : 'list-item-parent'}
+        id = {'listItem' + todo.id}
+      >
         {itemEdit}
         {itemAdd}
+        {this.props.nestedItems}
       </li>
     );
   }

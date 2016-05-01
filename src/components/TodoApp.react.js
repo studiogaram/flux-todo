@@ -35,9 +35,14 @@ export default class TodoApp extends React.Component {
   }
   render() {
     return (
-      <div>
-        <TodoTextInput saveItem = {this.createTodo} />
+      <div className="container-todo">
+        <TodoTextInput
+          className="input-todo-main"
+          saveItem = {this.createTodo}
+          placeholder = "Add New Todo"
+        />
         <TodoList
+          className="container-list"
           allTodos={this.state.allTodos}
           areAllCompleted={this.state.areAllCompleted}
           statusFilter={this.state.statusFilter}

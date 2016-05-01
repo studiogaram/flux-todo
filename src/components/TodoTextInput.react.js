@@ -12,12 +12,12 @@ export default class TodoTextInput extends React.Component {
     };
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.saveItem = this.saveItem.bind(this);
+    this.onBlur = this.onBlur.bind(this);
   }
 
   onKeyDown(e) {
     if (e.keyCode === ENTER_KEY) {
-      this.saveItem();
+      this.onBlur();
     }
   }
 
@@ -25,22 +25,22 @@ export default class TodoTextInput extends React.Component {
     this.setState({ value: e.target.value });
   }
 
-  saveItem() {
+  onBlur() {
     this.props.saveItem(this.state.value);
     this.setState({ value: '' });
   }
 
   render() {
     return (
-      <div>
         <input
+          className = {this.props.className}
           onKeyDown = {this.onKeyDown}
           onChange = {this.onChange}
-          onBlur = {this.saveItem}
+          onBlur = {this.onBlur}
           value = {this.state.value}
+          placeholder = {this.props.placeholder}
           autoFocus
         />
-      </div>
     );
   }
 }
@@ -49,4 +49,6 @@ TodoTextInput.propTypes = {
   textValue: React.PropTypes.string,
   value: React.PropTypes.string,
   saveItem: React.PropTypes.func.isRequired,
+  className: React.PropTypes.string.isRequired,
+  placeholder: React.PropTypes.string,
 };

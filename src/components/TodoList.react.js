@@ -28,9 +28,8 @@ export default class TodoList extends React.Component {
         }
       }
 
-      lists.push(<TodoListItem key={key} todo={items[key]} parentId={false} />);
-
       const listChildren = [];
+      let nestedItems;
       if (items[key].children) {
         for (let childKey in items[key].children) {
           if (this.props.statusFilter === 'incompleted') {
@@ -42,16 +41,33 @@ export default class TodoList extends React.Component {
               continue;
             }
           }
-          lists.push(
+          listChildren.push(
             <TodoListItem key={childKey} todo={items[key].children[childKey]} parentId={key} />);
         }
+        nestedItems = (
+          <ul
+            className="list-children"
+            id= { 'list' + key }
+            key={ 'ul' + key }
+          >
+            {listChildren}
+          </ul>
+        );
       }
+      lists.push(
+        <TodoListItem
+          key={key}
+          todo={items[key]}
+          parentId={false}
+          nestedItems={nestedItems}
+        />);
     }
 
     return (
-      <div id="todo-list">
-        <label>
+      <div className="container-todo-list">
+        <label className = "label-complete-all">
           <input
+            className = "input-check-complete-all"
             type = "checkbox"
             onChange = {this.completeAll}
             checked = {this.props.areAllCompleted}
@@ -59,9 +75,10 @@ export default class TodoList extends React.Component {
           Complete All
         </label>
 
-        <ul>{lists}</ul>
+        <ul className="list-todo">{lists}</ul>
 
         <TodoNavigation
+          className = "container-navigation"
           statusFilter = {this.props.statusFilter}
           numberTodoActive={numberTodoActive}
         />
