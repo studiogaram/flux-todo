@@ -1,4 +1,5 @@
 import React from 'react';
+import TextField from 'material-ui/TextField';
 
 const ENTER_KEY = 13;
 
@@ -9,15 +10,21 @@ export default class TodoTextInput extends React.Component {
     const checkedText = props.textValue ? props.textValue : '';
     this.state = {
       value: props.value || checkedText,
+      flagBugBluring: true,
     };
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onBlur = this.onBlur.bind(this);
   }
 
+  componentDidMount() {
+    this._input.focus();
+  }
+
   onKeyDown(e) {
     if (e.keyCode === ENTER_KEY) {
-      this.onBlur();
+      this.props.saveItem(this.state.value);
+      this.setState({ value: '' });
     }
   }
 
@@ -26,19 +33,29 @@ export default class TodoTextInput extends React.Component {
   }
 
   onBlur() {
-    this.props.saveItem(this.state.value);
-    this.setState({ value: '' });
+    if (this.props.className === 'input-todo-add') {
+      if (this.state.value === '') {
+        setTimeout(() => {
+          this._input.focus();
+        }, 0);
+      }
+    } else {
+      this.props.saveItem(this.state.value);
+      this.setState({ value: '' });
+    }
   }
 
   render() {
     return (
-        <input
+        <TextField
           className = {this.props.className}
           onKeyDown = {this.onKeyDown}
           onChange = {this.onChange}
           onBlur = {this.onBlur}
           value = {this.state.value}
-          placeholder = {this.props.placeholder}
+          hintText = {this.props.placeholder}
+          ref={(c) => this._input = c}
+          fullWidth
           autoFocus
         />
     );

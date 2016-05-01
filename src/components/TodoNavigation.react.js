@@ -1,63 +1,37 @@
 import React from 'react';
 import TodoActions from '../actions/TodoActions';
+import { Tabs, Tab } from 'material-ui/Tabs';
+import Done from 'material-ui/svg-icons/action/done';
+import Home from 'material-ui/svg-icons/action/home';
+import List from 'material-ui/svg-icons/action/list';
 
 export default class TodoNavigation extends React.Component {
-  removeAll() {
-    TodoActions.removeAll();
-  }
-
-  removeCompleted() {
-    TodoActions.removeCompleted();
-  }
-
   toggleFilter(e) {
-    TodoActions.setStatusFilter(e.target.value);
+    TodoActions.setStatusFilter(e);
   }
-
+  
   render() {
     return (
       <div>
-        <p>{this.props.numberTodoActive}
-          {this.props.numberTodoActive < 2 ? ' item' : ' items'} left.</p>
-
-        <button
-          className = "btn-remove-all"
-          onClick = {this.removeAll}>
-          Remove All
-        </button>
-        <button
-          className = "btn-remove-completed"
-          onClick = {this.removeCompleted}>
-          Remove Complete
-        </button>
-
-        <input
-          className = "input-radio-filter-all"
-          type = "radio"
-          name = "filterTodoStatus"
-          value = "all"
-          onChange = {this.toggleFilter}
-          checked = {this.props.statusFilter === 'all'}
-        />
-        All
-        <input
-          className = "input-radio-filter-incompleted"
-          type = "radio"
-          name = "filterTodoStatus"
-          value = "incompleted"
-          onChange = {this.toggleFilter}
-          checked = {this.props.statusFilter === 'incompleted'}
-        />
-        Active
-        <input
-          className = "input-radio-filter-completed"
-          type = "radio"
-          name = "filterTodoStatus"
-          value = "completed"
-          onChange = {this.toggleFilter}
-          checked = {this.props.statusFilter === 'completed'}
-        />
-        Completed
+        <Tabs onChange={this.toggleFilter}>
+          <Tab
+            className = "input-radio-filter-all"
+            icon={<Home />}
+            label= "All Items"
+            value = "all"/>
+          <Tab
+            className = "input-radio-filter-incompleted"
+            icon={<List />}
+            label={ this.props.numberTodoActive + ' of Active Item' }
+            value = "incompleted"
+          />
+          <Tab
+            className = "input-radio-filter-completed"
+            icon={<Done />}
+            value = "completed"
+            label={this.props.numberTodoInactive + ' of Completed Item' }
+          />
+        </Tabs>
       </div>
     );
   }

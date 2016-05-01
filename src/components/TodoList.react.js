@@ -2,20 +2,22 @@ import React from 'react';
 import TodoActions from '../actions/TodoActions';
 import TodoListItem from './TodoListItem.react';
 import TodoNavigation from './TodoNavigation.react';
+import {List, ListItem} from 'material-ui/List';
+import Divider from 'material-ui/Divider';
 
 export default class TodoList extends React.Component {
-  completeAll() {
-    TodoActions.toggleCompleteAll();
-  }
 
   render() {
     const items = this.props.allTodos;
     let lists = [];
     let numberTodoActive = 0;
+    let numberTodoInactive = 0;
 
     for (let key in items) {
       if (!items[key].completed) {
         numberTodoActive++;
+      }else{
+        numberTodoInactive++;
       }
 
       if (this.props.statusFilter === 'incompleted') {
@@ -29,7 +31,6 @@ export default class TodoList extends React.Component {
       }
 
       const listChildren = [];
-      let nestedItems;
       if (items[key].children) {
         for (let childKey in items[key].children) {
           if (this.props.statusFilter === 'incompleted') {
@@ -42,46 +43,35 @@ export default class TodoList extends React.Component {
             }
           }
           listChildren.push(
-            <TodoListItem key={childKey} todo={items[key].children[childKey]} parentId={key} />);
+            <TodoListItem
+              key={childKey}
+              todo={items[key].children[childKey]}
+              parentId={key}
+            />);
         }
-        nestedItems = (
-          <ul
-            className="list-children"
-            id= { 'list' + key }
-            key={ 'ul' + key }
-          >
-            {listChildren}
-          </ul>
-        );
       }
       lists.push(
         <TodoListItem
           key={key}
           todo={items[key]}
           parentId={false}
-          nestedItems={nestedItems}
+          nestedItems={listChildren}
         />);
     }
 
     return (
       <div className="container-todo-list">
-        <label className = "label-complete-all">
-          <input
-            className = "input-check-complete-all"
-            type = "checkbox"
-            onChange = {this.completeAll}
-            checked = {this.props.areAllCompleted}
-          />
-          Complete All
-        </label>
-
-        <ul className="list-todo">{lists}</ul>
-
         <TodoNavigation
           className = "container-navigation"
           statusFilter = {this.props.statusFilter}
           numberTodoActive={numberTodoActive}
+          numberTodoInactive={numberTodoInactive}
         />
+
+        <List>
+          {lists.length ? lists : <div className="panel-list-empty">There is no items.</div>}
+        </List>
+
       </div>
     );
   }

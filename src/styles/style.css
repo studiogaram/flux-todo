@@ -1,0 +1,64 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 100%;
+  vertical-align: baseline;
+  font-family: inherit;
+  color: inherit;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+}
+
+body {
+  font: 14px 'Helvetica Neue','SD Gothic Neo', Helvetica, Arial, sans-serif;
+  line-height: 1.4em;
+  background: #eaeaea;
+  color: #4d4d4d;
+  max-width: 550px;
+  margin: 0 auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -ms-font-smoothing: antialiased;
+  -o-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+.input-todo-main {
+  width: 100%;
+  font-size: 64px;
+}
+
+.list-item-parent,
+.list-item-child {
+  text-align: left;
+}
+
+.list-item-child {
+  padding-left: 120px !important;
+  font-size: 12px !important;
+}
+
+.list-item-child>.input-check-item {
+  padding-left: 53px
+}
+
+.input-todo-main {}
+
+.container-todo-list {
+  background-color: #fff !important;
+}
+
+.panel-list-empty {
+  text-align: center;
+  padding: 40px;
+}
