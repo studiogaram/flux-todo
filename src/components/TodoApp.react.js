@@ -3,12 +3,7 @@ import TodoStore from '../stores/TodoStore';
 import TodoActions from '../actions/TodoActions';
 import TodoTextInput from './TodoTextInput.react';
 import TodoList from './TodoList.react';
-import Paper from 'material-ui/Paper';
-import Checkbox from 'material-ui/Checkbox';
-import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
+import { Paper, Checkbox, AppBar, IconButton, IconMenu, MenuItem } from 'material-ui';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
@@ -100,7 +95,7 @@ export default class TodoApp extends React.Component {
                 anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
               >
               <MenuItem primaryText="Remove Completed" onClick = {this.removeCompleted} />
-              <MenuItem primaryText="Remove All" onClick = {this.removeAll} />
+              {this.state.areAllCompleted ? '' : <MenuItem primaryText="Remove All" onClick = {this.removeAll} /> }
              </IconMenu>
             }
           />

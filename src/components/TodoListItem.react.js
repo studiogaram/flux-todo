@@ -1,13 +1,8 @@
 import React from 'react';
 import TodoActions from '../actions/TodoActions';
 import TodoTextInput from './TodoTextInput.react';
-import {List, ListItem} from 'material-ui/List';
-import Checkbox from 'material-ui/Checkbox';
-import IconButton from 'material-ui/IconButton';
+import { List, ListItem, Checkbox, IconButton, IconMenu, MenuItem, Divider } from 'material-ui';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
-import Divider from 'material-ui/Divider';
 
 export default class TodoListItem extends React.Component {
   constructor(props) {

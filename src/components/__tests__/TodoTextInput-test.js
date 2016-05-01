@@ -20,7 +20,7 @@ describe('TodoTextInput', () => {
         saveItem,
       })
     );
-    input = TestUtils.findRenderedDOMComponentWithTag(todoTextInput, 'input');
+    input = TestUtils.findRenderedDOMComponentWithTag(todoTextInput, 'input').firstChild.firstChild;
   });
 
   describe('onChange event will change state-value', () => {

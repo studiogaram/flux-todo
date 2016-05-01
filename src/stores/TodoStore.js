@@ -33,7 +33,9 @@ const updateCompleted = (id, parentId, updates) => {
     _todos[id] = assign({}, _todos[id], updates);
 
     for (const childKey in _todos[id].children) {
-      _todos[id].children[childKey] = assign({}, _todos[id].children[childKey], updates);
+      if ({}.hasOwnProperty.call(_todos[id].children, childKey)) {
+        _todos[id].children[childKey] = assign({}, _todos[id].children[childKey], updates);
+      }
     }
   }
 };
@@ -48,7 +50,9 @@ const updateText = (id, parentId, updates) => {
 
 const updateCompletedAll = (updates) => {
   for (const id in _todos) {
-    updateCompleted(id, false, updates);
+    if ({}.hasOwnProperty.call(_todos, id)) {
+      updateCompleted(id, false, updates);
+    }
   }
 };
 
@@ -62,7 +66,9 @@ const remove = (id, parentId) => {
 
 const removeAll = () => {
   for (const id in _todos) {
-    remove(id);
+    if ({}.hasOwnProperty.call(_todos, id)) {
+      remove(id);
+    }
   }
 };
 
@@ -72,7 +78,7 @@ const removeCompleted = () => {
       remove(id, false);
       continue;
     }
-    _.forEach(_.filter(_todos[id].children, 'completed'), (value, key) => {
+    _.forEach(_.filter(_todos[id].children, 'completed'), (value) => {
       remove(value.id, value.parentId);
     });
   }
@@ -86,11 +92,6 @@ const TodoStore = assign({}, EventEmitter.prototype, {
       }
     }
     return true;
-    // if(_.filter(_todos,'completed').length){
-    //   return false;
-    // }else{
-    //   return true;
-    // }
   },
 
   getAll() {
@@ -99,14 +100,16 @@ const TodoStore = assign({}, EventEmitter.prototype, {
 
   completeParent() {
     for (const id in _todos) {
-      const completedChildren = (_.filter(_todos[id].children, 'completed').length);
-      const childrenLength = Object.keys(_todos[id].children).length;
+      if ({}.hasOwnProperty.call(_todos, id)) {
+        const completedChildren = (_.filter(_todos[id].children, 'completed').length);
+        const childrenLength = Object.keys(_todos[id].children).length;
 
-      if (childrenLength) {
-        if (completedChildren === childrenLength) {
-          _todos[id] = assign({}, _todos[id], { completed: true });
-        } else {
-          _todos[id] = assign({}, _todos[id], { completed: false });
+        if (childrenLength) {
+          if (completedChildren === childrenLength) {
+            _todos[id] = assign({}, _todos[id], { completed: true });
+          } else {
+            _todos[id] = assign({}, _todos[id], { completed: false });
+          }
         }
       }
     }
