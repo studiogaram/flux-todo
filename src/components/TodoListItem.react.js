@@ -3,7 +3,6 @@ import TodoActions from '../actions/TodoActions';
 import TodoTextInput from './TodoTextInput.react';
 import {List, ListItem} from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
-import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
@@ -72,15 +71,15 @@ export default class TodoListItem extends React.Component {
     const rightIconMenu = (
       <IconMenu
         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-        targetOrigin={{horizontal: 'right', vertical: 'top'}}
+        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+        targetOrigin={{ horizontal: 'right', vertical: 'top' }}
       >
-      {todo.parentId ? '' : <MenuItem
-            className = "btn-add-child-item"
-            onTouchTap = {this.setStateAddable}
-            primaryText = "Add Child Todo"
-          />}
-
+      {todo.parentId ? '' :
+        <MenuItem
+          className = "btn-add-child-item"
+          onTouchTap = {this.setStateAddable}
+          primaryText = "Add Child Todo"
+        />}
         <MenuItem
           className = "btn-edit-item"
           onTouchTap = {this.setStateEditable}
@@ -93,12 +92,11 @@ export default class TodoListItem extends React.Component {
         />
       </IconMenu>
     );
-
-    let label = (
+    const label = (
       <div>
       <ListItem
         className = {todo.parentId ? 'list-item-child' : 'list-item-parent'}
-        id = {'listItem' + todo.id}
+        id = {`listItem ${todo.id}`}
         leftCheckbox={
           <Checkbox
             className = "input-check-item"
@@ -110,9 +108,11 @@ export default class TodoListItem extends React.Component {
         initiallyOpen
         primaryText={todo.text}
         nestedItems = {this.props.nestedItems}
+        secondaryText={Object.keys(todo.children).length ?
+          `${Object.keys(todo.children).length} 개의 작은 할일 들` : ''}
       />
 
-      {this.props.nestedItems? <Divider inset={false} />:<Divider inset />}
+      {this.props.nestedItems ? <Divider inset={false} /> : <Divider inset />}
 
       </div>
     );
@@ -121,9 +121,8 @@ export default class TodoListItem extends React.Component {
       <div>
         {this.state.editable ? inputEdit : label}
         {this.state.addable ?
-           <div id="banner">{inputAdd}</div> :''
+           <div id="banner">{inputAdd}</div> : ''
         }
-
       </div>
     );
   }

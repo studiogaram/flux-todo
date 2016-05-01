@@ -54,8 +54,7 @@ export default class TodoTextInput extends React.Component {
           onBlur = {this.onBlur}
           value = {this.state.value}
           hintText = {this.props.placeholder}
-          ref={(c) => this._input = c}
-          fullWidth
+          ref={(c) => (this._input = c)}
           autoFocus
         />
     );

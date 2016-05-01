@@ -52,7 +52,9 @@ body {
   padding-left: 53px
 }
 
-.input-todo-main {}
+.input-todo-main {
+	width:100% !important;
+}
 
 .container-todo-list {
   background-color: #fff !important;
@@ -61,4 +63,11 @@ body {
 .panel-list-empty {
   text-align: center;
   padding: 40px;
+}
+.input-todo-edit{
+	padding-left:20px !important;
+	padding-right:20px !important;
+}
+.input-todo-add, .list-item-parent .input-todo-edit{
+	padding-left:70px !important;
 }

@@ -9,8 +9,9 @@ export default class TodoNavigation extends React.Component {
   toggleFilter(e) {
     TodoActions.setStatusFilter(e);
   }
-  
+
   render() {
+
     return (
       <div>
         <Tabs onChange={this.toggleFilter}>
@@ -18,18 +19,19 @@ export default class TodoNavigation extends React.Component {
             className = "input-radio-filter-all"
             icon={<Home />}
             label= "All Items"
-            value = "all"/>
+            value = "all"
+          />
           <Tab
             className = "input-radio-filter-incompleted"
             icon={<List />}
-            label={ this.props.numberTodoActive + ' of Active Item' }
+            label={`${this.props.numberTodoActive} of Active Item`}
             value = "incompleted"
           />
           <Tab
             className = "input-radio-filter-completed"
             icon={<Done />}
             value = "completed"
-            label={this.props.numberTodoInactive + ' of Completed Item' }
+            label ={`${this.props.numberTodoInactive} of Completed Item`}
           />
         </Tabs>
       </div>
@@ -40,4 +42,5 @@ export default class TodoNavigation extends React.Component {
 TodoNavigation.propTypes = {
   statusFilter: React.PropTypes.oneOf(['all', 'completed', 'incompleted']),
   numberTodoActive: React.PropTypes.number.isRequired,
+  numberTodoInactive: React.PropTypes.number.isRequired,
 };

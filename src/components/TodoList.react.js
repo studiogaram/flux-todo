@@ -1,22 +1,20 @@
 import React from 'react';
-import TodoActions from '../actions/TodoActions';
 import TodoListItem from './TodoListItem.react';
 import TodoNavigation from './TodoNavigation.react';
-import {List, ListItem} from 'material-ui/List';
-import Divider from 'material-ui/Divider';
+import { List, ListItem } from 'material-ui/List';
 
 export default class TodoList extends React.Component {
 
   render() {
     const items = this.props.allTodos;
-    let lists = [];
+    const lists = [];
     let numberTodoActive = 0;
     let numberTodoInactive = 0;
 
     for (let key in items) {
       if (!items[key].completed) {
         numberTodoActive++;
-      }else{
+      } else {
         numberTodoInactive++;
       }
 
